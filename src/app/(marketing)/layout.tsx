@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import NavigationBar from "@/components/ui/NavigationBar";
 
 export const metadata: Metadata = {
   title: "Onyx - Unlock Your Dream Job",
@@ -10,14 +7,15 @@ export const metadata: Metadata = {
     "Onyx is a job search management tool that helps you organize and track your every step of the way",
 };
 
-export default function RootLayout({
+export default function MarketingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <main>
+      <NavigationBar />
+      {children}
+    </main>
   );
 }
