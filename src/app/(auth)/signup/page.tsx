@@ -1,9 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
 import type { Metadata } from "next";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { UserAuthForm } from "@/components/user-auth-form";
+import { CreateAccountForm } from "@/components/auth/create-account-form";
 
 export const metadata: Metadata = {
   title: "Signup | Onyx",
@@ -17,7 +13,7 @@ export default function Signup() {
           <h1 className="text-2xl font-semibold tracking-tight text-neutral-100">
             Create an Onyx Account
           </h1>
-          <UserAuthForm />
+          <CreateAccountForm />
         </div>
       </div>
     </div>
