@@ -82,7 +82,8 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
             style={{ borderRadius: "0.3rem" }}
             className=""
           >
-            {isLoading && "loading..."}
+            {/* {isLoading && <Spinner className="mr-2" />} */}
+            {isLoading && "Loading ..."}
             Login
           </Button>
           <p className="text-sm text-neutral-500">
