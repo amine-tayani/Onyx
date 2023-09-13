@@ -36,7 +36,7 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
           <div className="mt-2 my-2">
             <p className="text-sm text-neutral-500">
               <Link
-                href="/login"
+                href="/password-reset"
                 className="text-neutral-300 hover:text-neutral-100"
               >
                 Forgot your password?
@@ -88,7 +88,7 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
           <p className="text-sm text-neutral-500">
             Don{"'"}t have an account?{" "}
             <Link
-              href="/login"
+              href="/signup"
               className="text-neutral-300 hover:text-neutral-100"
             >
               Create account {">"}
