@@ -115,7 +115,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
             By clicking the button below, I agree to Onyx’s{" "}
             <Link
               href="/terms"
-              className="underline underline-offset-4 hover:text-primary"
+              className="text-neutral-300 hover:text-neutral-100"
             >
               Terms of Service
             </Link>{" "}

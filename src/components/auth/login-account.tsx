@@ -80,7 +80,6 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
             variant="outline"
             disabled={isLoading}
             style={{ borderRadius: "0.3rem" }}
-            className=""
           >
             {isLoading && "Loading ..."}
             Login
