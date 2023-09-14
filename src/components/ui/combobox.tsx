@@ -50,17 +50,18 @@ export function Combobox() {
           variant="default"
           role="combobox"
           aria-expanded={open}
+          style={{ borderRadius: "0.2rem" }}
           className="capitalize justify-between text-neutral-500"
         >
           {value || "Select country"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className=" p-0 bg-neutral-900 w-full border-none ">
+      <PopoverContent className=" p-0 bg-neutral-900 w-full">
         <Command className="w-[400px] bg-neutral-900 text-neutral-400">
-          <CommandInput placeholder="Search country..." />
+          <CommandInput placeholder="Search country" />
           <CommandEmpty>No country found.</CommandEmpty>
-          <ScrollArea className="">
+          <ScrollArea>
             <CommandList className="text-neutral-400 max-h-[250px]">
               {countries.map((country) => (
                 <CommandItem
