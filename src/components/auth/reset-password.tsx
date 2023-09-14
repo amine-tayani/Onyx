@@ -4,6 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -42,6 +43,12 @@ export function ResetPasswordForm({ className, ...props }: UserAuthFormProps) {
             {isLoading && "loading..."}
             Recover Password
           </Button>
+          <Link
+            href="/login"
+            className="text-neutral-400 hover:text-neutral-100 text-sm my-2"
+          >
+            Back to login
+          </Link>
         </div>
       </form>
     </div>
