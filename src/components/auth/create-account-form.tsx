@@ -1,20 +1,41 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Combobox } from "@/components/ui/combobox";
-import Link from "next/link";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
+const CreateAccountSchema = z.object({
+  firstName: z.string().min(2, "Too short").max(50, "Too long").nonempty(),
+  lastName: z.string().min(2, "Too short").max(50, "Too long").nonempty(),
+  email: z.string().email("Invalid email").nonempty(),
+  password: z.string().min(12, "Too short").nonempty(),
+  location: z.string().nonempty(),
+  linkedin: z.string().nonempty(),
+});
+
+export type FormSchema = z.infer<typeof CreateAccountSchema>;
+
 export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormSchema>({
+    resolver: zodResolver(CreateAccountSchema),
+  });
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
+  async function onSubmit(data: FormSchema) {
     setIsLoading(true);
 
     setTimeout(() => {
@@ -24,7 +45,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4 mt-2">
           <div className="grid grid-cols-2 gap-x-3">
             <div className="grid gap-2">
@@ -40,7 +61,13 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                 autoComplete="firstName"
                 autoCorrect="off"
                 disabled={isLoading}
+                {...register("firstName")}
               />
+              {errors.firstName && (
+                <p className="text-xs text-red-500">
+                  {errors.firstName.message}
+                </p>
+              )}
             </div>
             <div className="grid gap-2">
               <Label className="text-neutral-500 text-xs" htmlFor="lastName">
@@ -55,7 +82,13 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                 autoComplete="lastName"
                 autoCorrect="off"
                 disabled={isLoading}
+                {...register("lastName")}
               />
+              {errors.lastName && (
+                <p className="text-xs text-red-500">
+                  {errors.lastName.message}
+                </p>
+              )}
             </div>
           </div>
           <div className="grid gap-2">
@@ -71,7 +104,11 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
+              {...register("email")}
             />
+            {errors.email && (
+              <p className="text-xs text-red-500">{errors.email.message}</p>
+            )}
           </div>
           <div className="grid gap-2">
             <Label className="text-neutral-500 text-xs" htmlFor="location">
@@ -92,7 +129,11 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="linkedin"
               autoCorrect="off"
               disabled={isLoading}
+              {...register("linkedin")}
             />
+            {errors.linkedin && (
+              <p className="text-xs text-red-500">{errors.linkedin.message}</p>
+            )}
           </div>
 
           <div className="grid gap-2">
@@ -107,7 +148,11 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="current-password"
               autoCorrect="off"
               disabled={isLoading}
+              {...register("password")}
             />
+            {errors.password && (
+              <p className="text-xs text-red-500">{errors.password.message}</p>
+            )}
           </div>
         </div>
         <div className=" mt-6">
@@ -135,6 +180,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
             disabled={isLoading}
             style={{ borderRadius: "0.3rem" }}
             className=""
+            type="submit"
           >
             {isLoading && "loading..."}
             Continue
