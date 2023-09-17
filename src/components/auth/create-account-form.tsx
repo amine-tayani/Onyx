@@ -43,7 +43,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
               />
             </div>
             <div className="grid gap-2">
-              <Label className="text-neutral-500 text-xs" htmlFor="firstname">
+              <Label className="text-neutral-500 text-xs" htmlFor="lastName">
                 Last Name
               </Label>
               <Input
