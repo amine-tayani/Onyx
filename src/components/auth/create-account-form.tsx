@@ -9,7 +9,15 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Combobox } from "@/components/ui/combobox";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -22,6 +30,11 @@ const CreateAccountSchema = z.object({
   linkedin: z.string().nonempty(),
 });
 
+interface Country {
+  label: string;
+  value: string;
+}
+
 export type FormSchema = z.infer<typeof CreateAccountSchema>;
 
 export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
@@ -32,6 +45,23 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
   } = useForm<FormSchema>({
     resolver: zodResolver(CreateAccountSchema),
   });
+
+  const [countries, setCountries] = React.useState<Country[]>([]);
+
+  React.useEffect(() => {
+    const getCountries = async () => {
+      const data = await fetch(
+        "https://valid.layercode.workers.dev/list/countries?format=select",
+        {
+          cache: "force-cache",
+        }
+      );
+      const response = await data.json();
+      setCountries(response.countries);
+    };
+
+    getCountries();
+  }, []);
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -114,7 +144,20 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
             <Label className="text-neutral-500 text-xs" htmlFor="location">
               Country
             </Label>
-            <Combobox />
+            <Select>
+              <SelectTrigger>
+                <SelectValue className=" ">Select your country</SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {countries.map((country) => (
+                    <SelectItem key={country.value} value={country.value}>
+                      <SelectLabel>{country.label}</SelectLabel>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <div className="grid gap-2">
             <Label className="text-neutral-500 text-xs" htmlFor="linkedin">
