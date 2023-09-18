@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -145,17 +146,19 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
               Country
             </Label>
             <Select>
-              <SelectTrigger>
-                <SelectValue className=" ">Select your country</SelectValue>
+              <SelectTrigger className="text-neutral-500">
+                <SelectValue placeholder="Select your country" />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
-                  {countries.map((country) => (
-                    <SelectItem key={country.value} value={country.value}>
-                      <SelectLabel>{country.label}</SelectLabel>
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
+                <ScrollArea className="h-72 rounded-md ">
+                  <SelectGroup>
+                    {countries.map((country) => (
+                      <SelectItem key={country.value} value={country.value}>
+                        <SelectLabel>{country.label}</SelectLabel>
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </ScrollArea>
               </SelectContent>
             </Select>
           </div>
