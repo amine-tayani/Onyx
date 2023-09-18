@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CreateAccountForm } from "@/components/auth/create-account-form";
+import { CreateAccountForm } from "@/components/auth/create-account/form";
 
 export const metadata: Metadata = {
   title: "Signup | Onyx",

@@ -8,13 +8,11 @@ import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -27,24 +25,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { FormSchema, createAccountSchema } from "./validators";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const createAccountSchema = z.object({
-  firstName: z.string().min(2, "Too short").max(50, "Too long").nonempty(),
-  lastName: z.string().min(2, "Too short").max(50, "Too long").nonempty(),
-  email: z.string().email("Invalid email").nonempty(),
-  password: z.string().min(12, "Too short").nonempty(),
-  location: z.string().nonempty(),
-  linkedin: z.string().nonempty(),
-});
 
 interface Country {
   label: string;
   value: string;
 }
-
-export type FormSchema = z.infer<typeof createAccountSchema>;
 
 export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
   const form = useForm<FormSchema>({
@@ -79,7 +67,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
   }
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div className={cn("grid gap-4", className)} {...props}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid gap-4 mt-2">
