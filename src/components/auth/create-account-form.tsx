@@ -19,10 +19,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-const CreateAccountSchema = z.object({
+const createAccountSchema = z.object({
   firstName: z.string().min(2, "Too short").max(50, "Too long").nonempty(),
   lastName: z.string().min(2, "Too short").max(50, "Too long").nonempty(),
   email: z.string().email("Invalid email").nonempty(),
@@ -36,15 +44,11 @@ interface Country {
   value: string;
 }
 
-export type FormSchema = z.infer<typeof CreateAccountSchema>;
+export type FormSchema = z.infer<typeof createAccountSchema>;
 
 export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormSchema>({
-    resolver: zodResolver(CreateAccountSchema),
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(createAccountSchema),
   });
 
   const [countries, setCountries] = React.useState<Country[]>([]);
@@ -76,172 +80,199 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid gap-4 mt-2">
-          <div className="grid grid-cols-2 gap-x-3">
-            <div className="grid gap-2">
-              <Label className="text-neutral-500 text-xs" htmlFor="firstname">
-                First Name
-              </Label>
-              <Input
-                className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
-                id="firstName"
-                placeholder="Your first name"
-                type="text"
-                autoCapitalize="none"
-                autoComplete="firstName"
-                autoCorrect="off"
-                disabled={isLoading}
-                {...register("firstName")}
-              />
-              {errors.firstName && (
-                <p className="text-xs text-red-500">
-                  {errors.firstName.message}
-                </p>
-              )}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="grid gap-4 mt-2">
+            <div className="grid grid-cols-2 gap-x-3">
+              <div className="grid gap-2">
+                <FormField
+                  name="firstName"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-neutral-500 text-xs">
+                        First Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
+                          placeholder="Your first name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid gap-2">
+                <FormField
+                  name="lastName"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-neutral-500 text-xs">
+                        Last Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
+                          placeholder="Your last name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
             <div className="grid gap-2">
-              <Label className="text-neutral-500 text-xs" htmlFor="lastName">
-                Last Name
-              </Label>
-              <Input
-                className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none "
-                id="lastName"
-                placeholder="Your Last name"
-                type="text"
-                autoCapitalize="none"
-                autoComplete="lastName"
-                autoCorrect="off"
-                disabled={isLoading}
-                {...register("lastName")}
+              <FormField
+                name="email"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-neutral-500 text-xs">
+                      Email
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
+                        placeholder="Your email address"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.lastName && (
-                <p className="text-xs text-red-500">
-                  {errors.lastName.message}
-                </p>
-              )}
             </div>
-          </div>
-          <div className="grid gap-2">
-            <Label className="text-neutral-500 text-xs" htmlFor="firstname">
-              Your Email
-            </Label>
-            <Input
-              className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none "
-              id="email"
-              placeholder="Type your email"
-              type="email"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-              {...register("email")}
-            />
-            {errors.email && (
-              <p className="text-xs text-red-500">{errors.email.message}</p>
-            )}
-          </div>
-          <div className="grid gap-2">
-            <Label className="text-neutral-500 text-xs" htmlFor="location">
-              Country
-            </Label>
-            <Select>
-              <SelectTrigger className="text-neutral-500">
-                <SelectValue placeholder="Select your country" />
-              </SelectTrigger>
-              <SelectContent>
-                <ScrollArea className="h-72 rounded-md ">
-                  <SelectGroup>
-                    {countries.map((country) => (
-                      <SelectItem key={country.value} value={country.value}>
-                        <SelectLabel>{country.label}</SelectLabel>
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </ScrollArea>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid gap-2">
-            <Label className="text-neutral-500 text-xs" htmlFor="linkedin">
-              Linkedin Profile
-            </Label>
-            <Input
-              className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none "
-              id="linkedin"
-              placeholder="Type your Linkedin Profile"
-              type="text"
-              autoCapitalize="none"
-              autoComplete="linkedin"
-              autoCorrect="off"
-              disabled={isLoading}
-              {...register("linkedin")}
-            />
-            {errors.linkedin && (
-              <p className="text-xs text-red-500">{errors.linkedin.message}</p>
-            )}
-          </div>
+            <div className="grid gap-2">
+              <FormField
+                name="location"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-neutral-500 text-xs">
+                      Location
+                    </FormLabel>
+                    <FormControl>
+                      <Select {...field}>
+                        <SelectTrigger className="text-neutral-500">
+                          <SelectValue
+                            className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
+                            placeholder="Select your country"
+                          />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <ScrollArea className="h-72">
+                            <SelectGroup>
+                              {countries.map((country) => (
+                                <SelectItem
+                                  key={country.value}
+                                  value={country.value}
+                                >
+                                  {country.label}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </ScrollArea>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid gap-2">
+              <FormField
+                name="linkedin"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-neutral-500 text-xs">
+                      LinkedIn
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
+                        placeholder="Your LinkedIn profile"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-          <div className="grid gap-2">
-            <Label className="text-neutral-500 text-xs" htmlFor="password">
-              Password
-            </Label>
-            <Input
-              className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none "
-              id="password"
-              placeholder="Must be at least 12 characters"
-              type="password"
-              autoComplete="current-password"
-              autoCorrect="off"
-              disabled={isLoading}
-              {...register("password")}
-            />
-            {errors.password && (
-              <p className="text-xs text-red-500">{errors.password.message}</p>
-            )}
+            <div className="grid gap-2">
+              <FormField
+                name="password"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-neutral-500 text-xs">
+                      Password
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
+                        placeholder="Your password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
-        </div>
-        <div className=" mt-6">
-          <p className=" text-xs text-neutral-500">
-            By clicking the button below, I agree to Onyx’s{" "}
-            <Link
-              href="/terms"
-              className="text-neutral-300 hover:text-neutral-100"
+          <div className=" mt-6">
+            <p className=" text-xs text-neutral-500">
+              By clicking the button below, I agree to Onyx’s{" "}
+              <Link
+                href="/terms"
+                className="text-neutral-300 hover:text-neutral-100"
+              >
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/privacy"
+                className="text-neutral-300 hover:text-neutral-100"
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
+          </div>
+          <div className="flex space-x-4 items-center my-8">
+            <Button
+              variant="outline"
+              disabled={isLoading}
+              style={{ borderRadius: "0.3rem" }}
+              className=""
+              type="submit"
             >
-              Terms of Service
-            </Link>{" "}
-            and{" "}
-            <Link
-              href="/privacy"
-              className="text-neutral-300 hover:text-neutral-100"
-            >
-              Privacy Policy
-            </Link>
-            .
-          </p>
-        </div>
-        <div className="flex space-x-4 items-center my-8">
-          <Button
-            variant="outline"
-            disabled={isLoading}
-            style={{ borderRadius: "0.3rem" }}
-            className=""
-            type="submit"
-          >
-            {isLoading && "loading..."}
-            Continue
-          </Button>
-          <p className="text-sm text-neutral-500">
-            Already have an account?{" "}
-            <Link
-              href="/login"
-              className="text-neutral-300 hover:text-neutral-100 underline underline-offset-4"
-            >
-              Login
-            </Link>
-          </p>
-        </div>
-      </form>
+              {isLoading && "loading..."}
+              Continue
+            </Button>
+            <p className="text-sm text-neutral-500">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="text-neutral-300 hover:text-neutral-100 underline underline-offset-4"
+              >
+                Login
+              </Link>
+            </p>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }
