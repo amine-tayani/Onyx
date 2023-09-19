@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
@@ -37,6 +36,7 @@ interface Country {
 export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(createAccountSchema),
+    mode: "onSubmit",
   });
 
   const [countries, setCountries] = React.useState<Country[]>([]);
@@ -86,6 +86,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                           className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
                           placeholder="Your first name"
                           {...field}
+                          disabled={isLoading}
                         />
                       </FormControl>
                       <FormMessage />
@@ -107,6 +108,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                           className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
                           placeholder="Your last name"
                           {...field}
+                          disabled={isLoading}
                         />
                       </FormControl>
                       <FormMessage />
@@ -129,6 +131,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                         className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
                         placeholder="Your email address"
                         {...field}
+                        disabled={isLoading}
                       />
                     </FormControl>
                     <FormMessage />
@@ -188,6 +191,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                         className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
                         placeholder="Your LinkedIn profile"
                         {...field}
+                        disabled={isLoading}
                       />
                     </FormControl>
                     <FormMessage />
@@ -211,6 +215,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                         className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none"
                         placeholder="Your password"
                         {...field}
+                        disabled={isLoading}
                       />
                     </FormControl>
                     <FormMessage />
@@ -246,7 +251,30 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
               className=""
               type="submit"
             >
-              {isLoading && "loading..."}
+              {isLoading ? (
+                <svg
+                  className="animate-spin h-5 w-5 text-neutral-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  ></path>
+                </svg>
+              ) : (
+                ""
+              )}
               Continue
             </Button>
             <p className="text-sm text-neutral-500">
