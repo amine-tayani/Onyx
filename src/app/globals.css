@@ -24,3 +24,8 @@ input,
 button {
   border-radius: 0.3em;
 }
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 4px;
+  margin-bottom: 0;
+}
