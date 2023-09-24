@@ -56,15 +56,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
     getCountries();
   }, []);
 
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  async function onSubmit(data: FormSchema) {
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }
+  async function onSubmit(data: FormSchema) {}
 
   return (
     <div className={cn('grid gap-4', className)} {...props}>
@@ -86,7 +78,6 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                           className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800'
                           placeholder='Your first name'
                           {...field}
-                          disabled={isLoading}
                         />
                       </FormControl>
                       <FormMessage />
@@ -108,7 +99,6 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                           className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800'
                           placeholder='Your last name'
                           {...field}
-                          disabled={isLoading}
                         />
                       </FormControl>
                       <FormMessage />
@@ -131,7 +121,6 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                         className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800'
                         placeholder='Your email address'
                         {...field}
-                        disabled={isLoading}
                       />
                     </FormControl>
                     <FormMessage />
@@ -191,7 +180,6 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                         className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800'
                         placeholder='Your LinkedIn profile'
                         {...field}
-                        disabled={isLoading}
                       />
                     </FormControl>
                     <FormMessage />
@@ -215,7 +203,6 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                         className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800'
                         placeholder='Your password'
                         {...field}
-                        disabled={isLoading}
                       />
                     </FormControl>
                     <FormMessage />
@@ -228,35 +215,10 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
           <div className='my-4 flex items-center space-x-4'>
             <Button
               variant='outline'
-              disabled={isLoading}
               style={{ borderRadius: '0.3rem' }}
               className=''
               type='submit'
             >
-              {isLoading ? (
-                <svg
-                  className='h-5 w-5 animate-spin text-neutral-500'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                >
-                  <circle
-                    className='opacity-25'
-                    cx='12'
-                    cy='12'
-                    r='10'
-                    stroke='currentColor'
-                    strokeWidth='4'
-                  ></circle>
-                  <path
-                    className='opacity-75'
-                    fill='currentColor'
-                    d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z'
-                  ></path>
-                </svg>
-              ) : (
-                ''
-              )}
               Continue
             </Button>
             <p className='text-sm text-neutral-500'>
