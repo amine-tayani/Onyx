@@ -1,0 +1,14 @@
+{
+  "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true
+  },
+  "files.autoSave": "afterDelay"
+}
