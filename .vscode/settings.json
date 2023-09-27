@@ -1,4 +1,9 @@
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
   "editor.quickSuggestions": {
     "strings": "on"

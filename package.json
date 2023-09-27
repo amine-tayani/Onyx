@@ -4,7 +4,7 @@
   "description": "Onyx is a Job Application Tracker made for job seekers to help them manage their job applications .",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev ",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -48,19 +48,19 @@
     "zod": "3.21.4"
   },
   "devDependencies": {
-    "supabase": ">=1.8.1",
-    "prettier": "^3.0.3",
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@typescript-eslint/parser": "^6.7.3",
+    "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
-    "@typescript-eslint/parser": "^6.7.3",
-    "prettier-plugin-tailwindcss": "^0.5.4",
-    "@commitlint/config-conventional": "^17.7.0",
-    "cz-conventional-changelog": "^3.3.0",
-    "@commitlint/cli": "^17.7.1",
-    "commitizen": "^4.3.0",
     "husky": "^8.0.3",
-    "lint-staged": "^14.0.1"
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.4",
+    "supabase": ">=1.8.1"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
