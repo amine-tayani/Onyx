@@ -11,6 +11,7 @@ module.exports = {
     'prefer-const': 'error',
     'react-hooks/exhaustive-deps': 'error',
     '@next/next/no-html-link-for-pages': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
     'react/jsx-key': 'off',
     'tailwindcss/no-custom-classname': 'off',
     'tailwindcss/classnames-order': 'error',
@@ -40,4 +41,6 @@ module.exports = {
       parser: '@typescript-eslint/parser',
     },
   ],
+
+  ignorePatterns: ['src/lib/supabase.ts'],
 };

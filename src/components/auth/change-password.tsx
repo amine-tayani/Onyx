@@ -1,11 +1,10 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import * as React from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -22,49 +21,49 @@ export function ChangePasswordForm({ className, ...props }: UserAuthFormProps) {
   }
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div className={cn('grid gap-6', className)} {...props}>
       <form onSubmit={onSubmit}>
-        <div className="grid gap-4 mt-2">
-          <div className="grid gap-2">
-            <Label className="text-neutral-500 text-xs" htmlFor="firstname">
+        <div className='mt-2 grid gap-4'>
+          <div className='grid gap-2'>
+            <Label className='text-xs text-neutral-500' htmlFor='firstname'>
               New Password
             </Label>
             <Input
-              className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none "
-              id="newPassword"
-              placeholder=""
-              type="password"
-              autoCapitalize="none"
-              autoComplete="newPassword"
-              autoCorrect="off"
+              className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 '
+              id='newPassword'
+              placeholder=''
+              type='password'
+              autoCapitalize='none'
+              autoComplete='newPassword'
+              autoCorrect='off'
               disabled={isLoading}
             />
           </div>
 
-          <div className="grid gap-2">
-            <Label className="text-neutral-500 text-xs" htmlFor="password">
+          <div className='grid gap-2'>
+            <Label className='text-xs text-neutral-500' htmlFor='password'>
               Confirm new password
             </Label>
             <Input
-              className="bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 border-none "
-              id="confirmPassword"
-              placeholder=""
-              type="password"
-              autoComplete="confirmPassword"
-              autoCorrect="off"
+              className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 '
+              id='confirmPassword'
+              placeholder=''
+              type='password'
+              autoComplete='confirmPassword'
+              autoCorrect='off'
               disabled={isLoading}
             />
           </div>
         </div>
 
-        <div className="flex my-8">
+        <div className='my-8 flex'>
           <Button
-            variant="outline"
+            variant='outline'
             disabled={isLoading}
-            style={{ borderRadius: "0.3rem" }}
+            style={{ borderRadius: '0.3rem' }}
           >
-            {isLoading && "Loading ..."}
-            {!isLoading && "Change Password"}
+            {isLoading && 'Loading ...'}
+            {!isLoading && 'Change Password'}
           </Button>
         </div>
       </form>

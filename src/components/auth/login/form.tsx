@@ -26,7 +26,9 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
     mode: 'onSubmit',
   });
 
-  async function onSubmit(data: FormSchema) {}
+  async function onSubmit(data: FormSchema) {
+    console.log(data);
+  }
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
@@ -41,7 +43,7 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
               </p>
             </div>
 
-            <div className='my-2 mt-2'>
+            <div className='my-2'>
               <p className='text-sm text-neutral-500'>
                 <Link
                   href='/password-reset'
@@ -90,7 +92,7 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
               Login
             </Button>
             <p className='text-sm text-neutral-500'>
-              Don{"'"}t have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link
                 href='/signup'
                 className='text-neutral-300 hover:text-neutral-100'

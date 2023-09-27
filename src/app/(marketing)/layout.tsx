@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import NavigationBar from "@/components/ui/NavigationBar";
+import type { Metadata } from 'next';
+import NavigationBar from '@/components/ui/NavigationBar';
 
 export const metadata: Metadata = {
-  title: "Onyx - Unlock Your Dream Job",
+  title: 'Onyx - Unlock Your Dream Job',
   description:
-    "Onyx is a job search management tool that helps you organize and track your every step of the way",
+    'Onyx is a job search management tool that helps you organize and track your every step of the way',
 };
 
 export default function MarketingLayout({

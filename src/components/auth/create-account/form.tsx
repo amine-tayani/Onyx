@@ -56,7 +56,9 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
     getCountries();
   }, []);
 
-  async function onSubmit(data: FormSchema) {}
+  async function onSubmit(data: FormSchema) {
+    console.log(data);
+  }
 
   return (
     <div className={cn('grid gap-4', className)} {...props}>
