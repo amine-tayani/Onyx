@@ -14,7 +14,8 @@
     "prepare": "husky install",
     "prettier": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\" --ignore-unknown",
     "prettier:check": "prettier --check \"**/*.{css,js,json,jsx,ts,tsx}\" --ignore-unknown",
-    "type-check": "tsc --noEmit"
+    "test": "jest --watch"
+
   },
   "dependencies": {
     "@hookform/resolvers": "3.3.0",
