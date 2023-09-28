@@ -8,14 +8,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "commit": "git-cz",
     "lint:fix": "next lint --fix",
     "lint:staged": "lint-staged",
     "prepare": "husky install",
     "prettier": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\" --ignore-unknown",
     "prettier:check": "prettier --check \"**/*.{css,js,json,jsx,ts,tsx}\" --ignore-unknown",
     "test": "jest --watch"
-
   },
   "dependencies": {
     "@hookform/resolvers": "3.3.0",
@@ -72,10 +70,5 @@
       "eslint --fix",
       "eslint"
     ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
