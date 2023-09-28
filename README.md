@@ -21,7 +21,7 @@ Onyx is a job search management tool that helps you organize and track your ever
 2. Install NPM packages
 
    ```sh
-   npm install
+   pnpm install
    ```
 
 ## Usage
@@ -29,7 +29,7 @@ Onyx is a job search management tool that helps you organize and track your ever
 1. Run the development server:
 
    ```sh
-   npm run dev
+   pnpm run dev
    ```
 
 2. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
