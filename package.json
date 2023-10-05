@@ -13,7 +13,7 @@
     "prepare": "husky install",
     "prettier": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\" --ignore-unknown",
     "prettier:check": "prettier --check \"**/*.{css,js,json,jsx,ts,tsx}\" --ignore-unknown",
-    "test": "jest --watch"
+    "test": "jest"
   },
   "dependencies": {
     "@hookform/resolvers": "3.3.0",
@@ -71,8 +71,5 @@
       "eslint --fix",
       "eslint"
     ]
-  },
-  "jest": {
-    "testEnvironment": "jsdom"
   }
 }
