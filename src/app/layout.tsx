@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { supabase } from '@/lib/supabase-client';
-import AuthProvider from '@/components/auth/AuthProvider';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -17,16 +15,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  const accessToken = session?.access_token || null;
   return (
     <html lang='en'>
-      <body className={inter.className}>
-        <AuthProvider accessToken={accessToken}>{children}</AuthProvider>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

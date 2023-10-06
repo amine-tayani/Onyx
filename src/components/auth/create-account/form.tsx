@@ -26,7 +26,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { FormSchema, createAccountSchema } from './validators';
-import { supabase } from '@/lib/supabase-client';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -66,21 +65,10 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
     getCountries();
   }, []);
 
+  // values: z.infer<typeof createAccountSchema> as params in onSubmit
   async function onSubmit(values: z.infer<typeof createAccountSchema>) {
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email: values.email,
-        password: values.password,
-        options: {
-          data: {
-            first_name: values.firstName,
-            last_name: values.lastName,
-            country: values.location,
-            linkedin_url: values.linkedin,
-          },
-        },
-      });
-      console.log(data, error);
+      console.log(values);
     } catch (error) {
       console.log(error);
     }

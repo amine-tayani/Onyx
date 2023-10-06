@@ -23,8 +23,6 @@
     "@radix-ui/react-scroll-area": "^1.0.4",
     "@radix-ui/react-select": "^1.2.2",
     "@radix-ui/react-slot": "^1.0.2",
-    "@supabase/auth-helpers-nextjs": "^0.8.0",
-    "@supabase/supabase-js": "^2.33.2",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
@@ -63,8 +61,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.4",
-    "supabase": ">=1.8.1"
+    "prettier-plugin-tailwindcss": "^0.5.4"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
