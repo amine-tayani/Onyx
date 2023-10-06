@@ -1,13 +1,19 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { LoginAccountForm } from '@/components/auth/login/form';
-
 export const metadata: Metadata = {
   title: 'Login | Onyx',
   description: 'Sign in to Onyx and Manage your job applications.',
 };
-export default function LoginPage() {
+export default async function LoginPage() {
+  const supabase = createServerComponentClient({ cookies });
+  const { data } = await supabase.auth.getSession();
 
-  
+  if (data?.session) {
+    redirect('/');
+  }
 
   return (
     <div className='container relative mt-8 flex-col items-center justify-center lg:max-w-none lg:px-0'>
