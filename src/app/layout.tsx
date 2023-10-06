@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { supabase } from '@/lib/supabase-client';
-import { cookies } from 'next/headers';
-
-import './globals.css';
 import AuthProvider from '@/components/auth/AuthProvider';
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
