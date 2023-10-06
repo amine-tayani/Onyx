@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   description: 'Sign in to Onyx and Manage your job applications.',
 };
 export default function LoginPage() {
+
+  
+
   return (
     <div className='container relative mt-8 flex-col items-center justify-center lg:max-w-none lg:px-0'>
       <div className='lg:p-8'>

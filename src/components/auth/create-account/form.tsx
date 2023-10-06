@@ -3,6 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -25,6 +26,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { FormSchema, createAccountSchema } from './validators';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Database } from '@/lib/supabase';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -37,7 +40,17 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(createAccountSchema),
     mode: 'onSubmit',
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      location: '',
+      linkedin: '',
+      password: '',
+    },
   });
+
+  const supabase = createClientComponentClient<Database>();
 
   const [countries, setCountries] = React.useState<Country[]>([]);
 
@@ -56,8 +69,24 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
     getCountries();
   }, []);
 
-  async function onSubmit(data: FormSchema) {
-    console.log(data);
+  async function onSubmit(values: z.infer<typeof createAccountSchema>) {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: values.email,
+        password: values.password,
+        options: {
+          data: {
+            first_name: values.firstName,
+            last_name: values.lastName,
+            country: values.location,
+            linkedin_url: values.linkedin,
+          },
+        },
+      });
+      console.log(data, error);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -140,7 +169,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                       Location
                     </FormLabel>
                     <FormControl>
-                      <Select {...field}>
+                      <Select onValueChange={field.onChange} {...field}>
                         <SelectTrigger className='text-neutral-500'>
                           <SelectValue
                             className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800'
