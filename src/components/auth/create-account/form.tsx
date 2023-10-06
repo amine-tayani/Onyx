@@ -26,8 +26,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { FormSchema, createAccountSchema } from './validators';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase-client';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -49,8 +48,6 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
       password: '',
     },
   });
-
-  const supabase = createClientComponentClient<Database>();
 
   const [countries, setCountries] = React.useState<Country[]>([]);
 
