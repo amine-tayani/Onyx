@@ -1,15 +1,15 @@
 'use client';
 
 import * as React from 'react';
+import * as z from 'zod';
 import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { useForm } from 'react-hook-form';
+import { useSignUp } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Form,
   FormControl,
@@ -25,6 +25,9 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 export type SignupFormSchema = z.infer<typeof SignupSchema>;
 
 export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
+  const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
+
   const form = useForm<SignupFormSchema>({
     resolver: zodResolver(SignupSchema),
     mode: 'onSubmit',
@@ -34,11 +37,22 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
     },
   });
 
+  const { isLoaded, signUp } = useSignUp();
+
   async function onSubmit(data: SignupFormSchema) {
+    if (!isLoaded) {
+      return;
+    }
     try {
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+      await signUp?.create({
+        emailAddress: data.email,
+        password: data.password,
+      });
+
+      setLoading(true);
+      router.push('/login');
+    } catch (err: any) {
+      console.error(JSON.stringify(err, null, 2));
     }
   }
 
@@ -100,7 +114,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
               className=''
               type='submit'
             >
-              {form.formState.isSubmitting ? 'Loading...' : 'Sign up'}
+              {loading ? 'Loading...' : 'Sign up'}
             </Button>
             <p className='text-sm text-neutral-500'>
               Already have an account?{' '}
