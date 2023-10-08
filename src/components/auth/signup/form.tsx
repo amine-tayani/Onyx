@@ -5,7 +5,6 @@ import * as z from 'zod';
 import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useSignUp } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/button';
@@ -37,18 +36,9 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
     },
   });
 
-  const { isLoaded, signUp } = useSignUp();
-
   async function onSubmit(data: SignupFormSchema) {
-    if (!isLoaded) {
-      return;
-    }
     try {
-      await signUp?.create({
-        emailAddress: data.email,
-        password: data.password,
-      });
-
+      console.log(data);
       setLoading(true);
       router.push('/login');
     } catch (err: any) {
