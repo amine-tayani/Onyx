@@ -69,7 +69,6 @@ export default function Hero() {
           Star on Github
         </Link>
       </div>
-      {/* put here an image */}
     </header>
   );
 }
