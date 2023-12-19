@@ -43,7 +43,7 @@ export default function Hero() {
           </svg>
         </div>
       </a>
-      <h1 className='font-display mt-5 text-4xl font-extrabold leading-[1.15] text-black sm:text-6xl sm:leading-[1.15]'>
+      <h1 className='mt-5 font-display text-4xl font-extrabold leading-[1.15] text-black sm:text-6xl sm:leading-[1.15]'>
         Short Links With
         <br />
         <span className='bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent'>

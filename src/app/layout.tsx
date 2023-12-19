@@ -8,7 +8,7 @@ import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/cn';
 
 export const metadata: Metadata = {
-  title: 'Onyx - Unlock Your Dream Job',
+  title: 'Onyx - Manage your job applications',
   description: `${siteConfig.description}`,
 };
 
