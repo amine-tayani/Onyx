@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Navigation } from '@/components/ui/navigation/';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
@@ -12,10 +11,5 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <main>
-      <Navigation />
-      {children}
-    </main>
-  );
+  return <main>{children}</main>;
 }

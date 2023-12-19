@@ -6,6 +6,8 @@ export default function HomePage() {
     <>
       <Hero />
       <Features />
+      <Features />
+      <Features />
     </>
   );
 }

@@ -6,10 +6,10 @@ import { usePathname } from 'next/navigation';
 export function NavLink({ href, slug }: { href: string; slug: string }) {
   const pathname = usePathname();
   return (
-    <Link href={href} className='ml-4'>
+    <Link href={href}>
       <div
         className={cn(
-          'text-foreground/80 transition-colors hover:text-foreground',
+          'text-muted-foreground transition-colors hover:text-foreground',
           {
             '!text-foreground': pathname === href,
           }

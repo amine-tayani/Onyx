@@ -17,8 +17,8 @@ interface Props {
 export function ApplicationCard({ application }: Props) {
   return (
     <Card>
-      <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-0'>
-        <CardTitle className='text-sm font-medium'>
+      <CardHeader className=' flex flex-row items-center justify-between space-y-0 pb-0'>
+        <CardTitle className='text-sm font-medium text-muted-foreground '>
           {application.company}
         </CardTitle>
         {application.logo}

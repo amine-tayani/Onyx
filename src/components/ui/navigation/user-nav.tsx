@@ -15,14 +15,12 @@ import {
 import { Skeleton } from '../skeleton';
 import { LogoutButton } from './logout-button';
 import Link from 'next/link';
-import { DefaultUser } from 'next-auth';
+import { useSession } from 'next-auth/react';
 
-interface UserNavProps {
-  user?: DefaultUser;
-}
+export default function UserNav() {
+  const { data: session } = useSession();
 
-const UserNav: React.FC<UserNavProps> = ({ user }) => {
-  if (!user) {
+  if (!session || !session.user) {
     return null;
   }
 
@@ -46,13 +44,13 @@ const UserNav: React.FC<UserNavProps> = ({ user }) => {
           <div className='flex flex-col space-y-1'>
             <p className='text-sm font-medium leading-none'>Amine</p>
             <p className='text-xs leading-none text-muted-foreground'>
-              {user.email}
+              {session.user.email}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={`/user/${user.id}`}>
+          <Link href={`/user/${session.user.id}`}>
             <DropdownMenuItem>
               Profile
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
@@ -79,6 +77,4 @@ const UserNav: React.FC<UserNavProps> = ({ user }) => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
-
-export default UserNav;
+}

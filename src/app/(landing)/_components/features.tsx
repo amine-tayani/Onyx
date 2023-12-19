@@ -26,7 +26,7 @@ export default function Features() {
               </span>{' '}
               marketing teams
             </h2>
-            <p className='mt-5 text-muted-foreground/80 sm:text-lg'>
+            <p className='mt-5 font-display font-medium text-muted-foreground/70 sm:text-lg'>
               Onyx.com is more than just a job tracker. It empowers you with
               powerful features so you can land jobs sooner.
             </p>

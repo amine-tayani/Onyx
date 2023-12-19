@@ -8,14 +8,18 @@ import UserNav from '@/components/ui/navigation/user-nav';
 import AuthenticationLinks from './auth-links';
 import { MobileNav } from './mobile-nav';
 import { Icons } from '../icons';
+import useScroll from '@/hooks/use-scroll';
+import { cn } from '@/lib/cn';
 
 export function Navigation() {
   const { status, data: session } = useSession();
+  const scrolled = useScroll(80);
 
   const NavLinks = () => (
     <>
       <NavLink slug='Home' href='/' />
       <NavLink slug='Dashboard' href='/dashboard' />
+      <NavLink slug='Features' href='/features' />
       {session?.user ? (
         <NavLink slug='Profile' href={`/user/${session?.user.id}`} />
       ) : null}
@@ -24,8 +28,13 @@ export function Navigation() {
   );
 
   return (
-    <header className='sticky top-0 z-50 w-full'>
-      <nav className=' mx-2 my-4 flex h-14 items-center bg-background p-2 text-sm font-medium lg:m-4 lg:p-8'>
+    <header
+      className={cn('sticky inset-x-0 top-0 z-30 w-full transition-all', {
+        'border-b border-neutral-800 bg-background/75 pt-0.5 drop-shadow-sm backdrop-blur-lg':
+          scrolled,
+      })}
+    >
+      <nav className=' mx-2 my-4 flex h-14 items-center p-2 text-sm font-medium lg:m-4 lg:p-6'>
         <div className='flex w-full items-center justify-between'>
           <div className='relative flex items-center gap-3'>
             <Link className='flex space-x-1.5 focus:outline-none' href='/'>
@@ -34,7 +43,7 @@ export function Navigation() {
                 <span className=' text-xs text-muted-foreground'>Onyx</span>
               </div>
             </Link>
-            <div className='hidden items-center md:flex'>
+            <div className='hidden items-center md:flex md:space-x-6'>
               <NavLinks />
             </div>
           </div>
@@ -42,7 +51,7 @@ export function Navigation() {
           <div className='flex'>
             <div className='flex items-center justify-end gap-2'>
               {status === 'authenticated' && session ? (
-                <UserNav user={session?.user} />
+                <UserNav />
               ) : (
                 <AuthenticationLinks />
               )}
