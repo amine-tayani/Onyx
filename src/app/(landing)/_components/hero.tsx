@@ -15,7 +15,7 @@ export default function Hero() {
         </span>
       </h1>
       <h2 className='mt-5 font-medium text-muted-foreground/70 sm:text-xl sm:leading-8'>
-        Say goodbye to the chaos of endless spreadsheets. Onyx empowers you to
+        Bid farewell to the chaos of endless spreadsheets. Onyx empowers you to
         take control of your job search.
       </h2>
       <div className='mx-auto mt-10 flex max-w-fit space-x-4'>
@@ -23,14 +23,14 @@ export default function Hero() {
           className='rounded bg-hero px-6 py-2 text-sm font-semibold text-primary transition-colors hover:bg-hero/80'
           href='/signup'
         >
-          Start For Free{' '}
+          Start For Free
         </Link>
         <Link
           className='flex items-center gap-x-2 rounded bg-secondary px-6 py-2 text-sm font-semibold text-card-foreground transition-colors hover:bg-secondary/80'
           href={`${siteConfig.links.github}`}
         >
           <Icons.gitHub className='h-5 w-5' />
-          Star on Github
+          Star Us On Github
         </Link>
       </div>
     </header>
