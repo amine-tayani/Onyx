@@ -34,7 +34,7 @@ export function Navigation() {
           scrolled,
       })}
     >
-      <nav className=' mx-2 my-4 flex h-14 items-center p-2 text-sm font-medium lg:m-4 lg:p-6'>
+      <nav className=' m-4 flex h-10 items-center p-2 text-sm font-medium lg:m-4 lg:p-6'>
         <div className='flex w-full items-center justify-between'>
           <div className='relative flex items-center gap-3'>
             <Link className='flex space-x-1.5 focus:outline-none' href='/'>

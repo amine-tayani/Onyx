@@ -33,7 +33,7 @@ export function MobileNav({ children }: Props) {
         <div className=' md:hidden'>
           <button
             className={cn(
-              'hamburger  rounded-lg p-4 duration-300 focus:outline-none ',
+              'hamburger rounded-lg p-4 duration-300 focus:outline-none ',
               open ? 'is-active' : ''
             )}
             onClick={() => setOpen((prev) => !prev)}
@@ -47,7 +47,7 @@ export function MobileNav({ children }: Props) {
           initial={{ opacity: 0 }}
           onClickCapture={() => setOpen(false)}
           animate={{ opacity: 1 }}
-          className={`left-0 top-[80px] z-10 flex h-full w-full flex-1 snap-y flex-col gap-5 justify-self-center border-b bg-background/80 p-3 backdrop-blur-md md:mt-0 md:hidden md:pb-0 ${
+          className={`left-0 top-[60px] z-10 flex min-h-screen w-full flex-1 snap-y flex-col gap-5 justify-self-center border-b border-neutral-800 bg-background/75 p-8 drop-shadow-sm backdrop-blur-lg md:mt-0 md:hidden md:pb-0 ${
             open ? 'absolute block w-full' : 'hidden'
           }`}
         >
