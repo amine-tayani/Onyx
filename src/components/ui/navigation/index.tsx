@@ -17,9 +17,11 @@ export function Navigation() {
 
   const NavLinks = () => (
     <>
-      <NavLink slug='Home' href='/' />
-      <NavLink slug='Dashboard' href='/dashboard' />
+      <NavLink slug='Product' href='/product' />
       <NavLink slug='Features' href='/features' />
+      <NavLink slug='Blog' href='/blog' />
+      <NavLink slug='Customers' href='/customers' />
+      <NavLink slug='Pricing' href='/pricing' />
       {session?.user ? (
         <NavLink slug='Profile' href={`/user/${session?.user.id}`} />
       ) : null}
@@ -34,14 +36,11 @@ export function Navigation() {
           scrolled,
       })}
     >
-      <nav className=' m-4 flex h-10 items-center p-2 text-sm font-medium lg:m-4 lg:p-6'>
+      <nav className=' m-4 flex h-10 items-center p-2 text-sm font-medium lg:mx-32 lg:p-3'>
         <div className='flex w-full items-center justify-between'>
           <div className='relative flex items-center gap-3'>
-            <Link className='flex space-x-1.5 focus:outline-none' href='/'>
-              <div className='flex space-x-2'>
-                <Icons.logo className='h-10 w-10' />
-                <span className=' text-xs text-muted-foreground'>Onyx</span>
-              </div>
+            <Link className='mx-4 focus:outline-none' href='/'>
+              <Icons.logo className='h-10 w-10' />
             </Link>
             <div className='hidden items-center md:flex md:space-x-6'>
               <NavLinks />
@@ -60,13 +59,13 @@ export function Navigation() {
                 {!session && (
                   <>
                     <Link
-                      className='flex w-full items-center justify-center gap-2 rounded border border-neutral-700 px-6 py-1.5 text-sm font-medium text-neutral-100 transition-colors hover:border-transparent hover:bg-neutral-800 lg:w-auto'
+                      className='w-32 rounded bg-muted px-4 py-1.5 text-center text-sm font-medium text-primary transition-colors hover:bg-muted/80'
                       href='/login'
                     >
                       Log In{' '}
                     </Link>
                     <Link
-                      className='flex w-full items-center justify-center gap-2 rounded bg-neutral-200 px-6 py-1.5 text-sm font-medium text-neutral-900 transition-colors hover:border-transparent hover:bg-neutral-300 lg:w-auto'
+                      className='w-32 rounded bg-neutral-200 px-4 py-1.5 text-center text-sm font-medium text-primary-foreground transition-colors hover:bg-primary'
                       href='/signup'
                     >
                       Sign Up{' '}
