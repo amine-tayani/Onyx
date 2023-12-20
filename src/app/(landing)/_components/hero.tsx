@@ -1,12 +1,12 @@
 'use client';
 
+import Link from 'next/link';
 import { Icons } from '@/components/ui/icons';
 import { siteConfig } from '@/config/site';
-import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <header className='mx-auto mb-10 mt-28 max-w-md px-2.5 text-center font-display sm:max-w-lg sm:px-0'>
+    <header className=' mx-auto mb-10 mt-28 max-w-md px-2.5 text-center font-display sm:max-w-lg sm:px-0'>
       <h1 className=' text-4xl font-extrabold leading-[1.15] text-primary sm:text-6xl sm:leading-[1.15]'>
         Unleash Your
         <br />
