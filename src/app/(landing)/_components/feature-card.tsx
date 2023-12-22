@@ -16,7 +16,7 @@ export default function FeatureCard({ icon, title, description }: CardProps) {
   return (
     <Card
       className={cn(
-        'group relative w-full overflow-hidden rounded-xl border border-muted-foreground/20 bg-gradient-to-r from-muted/30 to-card/30 shadow-[0_0_15px_rgba(67,71,75,0.6)] transition duration-300',
+        'group relative w-full overflow-hidden rounded-xl border border-muted-foreground/20 bg-secondary transition duration-300',
         'md:hover:border-transparent'
       )}
     >
