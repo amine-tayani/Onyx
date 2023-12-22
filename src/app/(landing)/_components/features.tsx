@@ -31,7 +31,7 @@ export default function Features() {
               powerful features so you can land jobs sooner.
             </p>
           </div>
-          <div className='relative z-10 grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 [&>*:nth-child(3)]:hidden md:[&>*:nth-child(3)]:block'>
+          <div className='relative z-10 grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-10 [&>*:nth-child(3)]:hidden md:[&>*:nth-child(3)]:block'>
             <FeatureCard
               icon={PackageOpen}
               title='Centralized Organization'
