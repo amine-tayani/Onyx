@@ -16,27 +16,26 @@ export default function FeatureCard({ icon, title, description }: CardProps) {
   return (
     <Card
       className={cn(
-        'group relative w-full overflow-hidden rounded-xl border border-muted-foreground/20 bg-secondary transition duration-300',
-        'md:hover:border-transparent'
+        ' group relative w-full overflow-hidden border border-muted-foreground/20 bg-muted transition duration-300'
       )}
     >
       <CardHeader className='pb-3'>
         <CardTitle>
-          <div className='flex items-center'>
+          <div className=''>
             <div>
               {Icon ? (
                 <Icon
                   strokeWidth={1.5}
-                  className={cn('mr-3 h-6 w-6 text-primary/70')}
+                  className={cn('mr-3 h-8 w-8 text-neutral-400')}
                 />
               ) : null}
             </div>
-            <h1 className='tracking-tight text-neutral-100'>{title}</h1>
+            <h1 className='mt-3 text-base font-normal text-primary'>{title}</h1>
           </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className='text-sm text-muted-foreground sm:text-base sm:leading-7'>
+        <p className='text-sm font-light text-neutral-400 sm:text-base sm:leading-7'>
           {description}
         </p>
       </CardContent>

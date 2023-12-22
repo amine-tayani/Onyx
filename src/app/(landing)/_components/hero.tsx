@@ -33,7 +33,10 @@ export default function Hero() {
             </Balancer>
           </div>
           <Balancer>
-            <p className=' mx-auto mt-4 max-w-[26rem] text-muted-foreground md:max-w-xl md:leading-loose'>
+            <p
+              className=' mx-auto mt-4 max-w-[26rem] font-display font-medium text-muted-foreground/70 sm:text-lg md:max-w-xl md:leading-loose
+            '
+            >
               Bid farewell to the chaos of endless spreadsheets. Onyx empowers
               you to take control of your job search.
             </p>
@@ -70,7 +73,7 @@ export default function Hero() {
       </div>
       <div className='relative z-10'>
         <div className='mx-auto w-full max-w-5xl px-6 py-24 text-center'>
-          <h3 className='dark:text-primary-light/80 justify-center space-x-1.5 text-primary/70 md:flex'>
+          <h3 className='justify-center space-x-1.5 font-display font-medium text-muted-foreground/70 sm:text-lg md:flex'>
             <span>
               Powering those seeking an opportunity from entry level candidates
               to seniors.
