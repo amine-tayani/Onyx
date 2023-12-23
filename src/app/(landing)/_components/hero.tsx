@@ -10,15 +10,6 @@ import { Balancer } from 'react-wrap-balancer';
 export default function Hero() {
   return (
     <div className=' relative bg-gradient-to-tr from-[#2a2a2a] via-[#181818] to-[#262727] pt-20 text-center lg:pt-40'>
-      <div className='absolute inset-0 hidden justify-center md:flex'>
-        <Image
-          alt='Gradient'
-          width={1000}
-          height={1000}
-          style={{ color: 'transparent', width: 'auto', height: 'auto' }}
-          src='/gradient-dark.svg'
-        />
-      </div>
       <div className='relative z-10'>
         <div className='px-6'>
           <div className=' mx-auto max-w-[22rem] space-y-2 font-display text-[2rem] font-extrabold leading-tight text-primary md:max-w-[40rem] md:text-6xl md:leading-[1.2]'>
@@ -57,19 +48,6 @@ export default function Hero() {
             </Link>
           </div>
         </div>
-        <div className=' invisible mt-6 h-px w-full bg-muted-foreground/10 md:visible' />
-      </div>
-      <div className=' -mt-px hidden h-px w-full bg-muted-foreground/10 md:block' />
-      <div className=' -mt-px hidden h-px w-full bg-muted-foreground/10 md:block' />
-      <div className='absolute left-1/2 top-0 z-0 mx-auto h-full w-full max-w-5xl -translate-x-1/2'>
-        <div className=' absolute top-[13rem] hidden h-px w-full bg-muted-foreground/10 md:block' />
-        <div className=' absolute top-[17.1rem] hidden h-px w-full bg-muted-foreground/10 md:block' />
-        <div className=' absolute left-0 h-full w-px bg-muted-foreground/10' />
-        <div className=' absolute right-0 h-full w-px bg-muted-foreground/10' />
-      </div>
-      <div className='absolute left-1/2 top-0 z-0 mx-auto h-full w-full max-w-6xl -translate-x-1/2'>
-        <div className=' absolute left-0 h-full w-px bg-muted-foreground/10' />
-        <div className=' absolute right-0 h-full w-px bg-muted-foreground/10' />
       </div>
       <div className='relative z-10'>
         <div className='mx-auto w-full max-w-5xl px-6 py-24 text-center'>
