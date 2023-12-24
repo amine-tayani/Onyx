@@ -9,29 +9,25 @@ import { Balancer } from 'react-wrap-balancer';
 
 export default function Hero() {
   return (
-    <div className=' relative bg-gradient-to-tr from-[#2a2a2a] via-[#181818] to-[#262727] pt-20 text-center lg:pt-40'>
+    <div className=' relative pt-20 text-center lg:pt-40'>
       <div className='relative z-10'>
         <div className='px-6'>
           <div className=' mx-auto max-w-[22rem] space-y-2 font-display text-[2rem] font-extrabold leading-tight text-primary md:max-w-[40rem] md:text-6xl md:leading-[1.2]'>
-            <Balancer>
-              <h1>
-                {' '}
+            <h1>
+              <Balancer>
                 Unleash Your Career{' '}
                 <span className='bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent'>
                   Potential Sooner
                 </span>
-              </h1>
-            </Balancer>
+              </Balancer>
+            </h1>
           </div>
-          <Balancer>
-            <p
-              className=' mx-auto mt-4 max-w-[26rem] font-display font-medium text-muted-foreground/70 sm:text-lg md:max-w-xl md:leading-loose
-            '
-            >
+          <p className=' mx-auto mt-4 max-w-[26rem] font-display font-medium text-muted-foreground/70 sm:text-lg md:max-w-xl md:leading-loose'>
+            <Balancer>
               Bid farewell to the chaos of endless spreadsheets. Onyx empowers
               you to take control of your job search.
-            </p>
-          </Balancer>
+            </Balancer>
+          </p>
           <div className='mt-8 flex flex-col items-center justify-center space-y-4 px-12 sm:flex-row sm:space-x-6 sm:space-y-0'>
             <Link
               className='rounded bg-hero px-6 py-2 text-sm font-medium text-primary transition-colors hover:bg-hero/80'
