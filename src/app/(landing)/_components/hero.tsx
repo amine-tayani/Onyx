@@ -56,7 +56,6 @@ export default function Hero() {
               className='group mt-3 flex items-center justify-center font-medium text-primary/90 hover:text-primary md:mt-0'
               href='/customers'
             >
-              Learn more
               <ChevronRight className='h-3.5 w-3.5 group-hover:text-primary' />
             </Link>
           </h3>
