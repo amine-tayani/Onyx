@@ -70,22 +70,13 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='mt-2 grid gap-4'>
-            <div>
-              <p className='text-sm text-neutral-500'>
-                simplify the entire application tracking process for a smoother
-                and fairer job hunt.
-              </p>
-            </div>
-
             <div className='my-2'>
-              <p className='text-sm text-neutral-500'>
-                <Link
-                  href='/password-reset'
-                  className='text-neutral-300 hover:text-neutral-100'
-                >
-                  Forgot your password?
-                </Link>
-              </p>
+              <Link
+                href='/password-reset'
+                className='text-sm text-muted-foreground hover:text-primary/90'
+              >
+                Forgot your password?
+              </Link>
             </div>
             <div className='grid gap-2'>
               <FormField
@@ -93,12 +84,12 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='text-xs text-neutral-500'>
+                    <FormLabel className='text-muted-foreground/80'>
                       Email
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800'
+                        className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
                         placeholder='Your email address'
                         {...field}
                       />
@@ -115,13 +106,13 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='text-xs text-neutral-500'>
+                    <FormLabel className='text-muted-foreground/80'>
                       Password
                     </FormLabel>
                     <FormControl>
                       <Input
                         type='password'
-                        className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800'
+                        className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
                         placeholder='Your password'
                         {...field}
                       />
@@ -135,15 +126,13 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
 
           <div className='my-8 flex items-center space-x-4'>
             <Button
-              className='disabled:cursor-not-allowed disabled:opacity-50'
+              className='bg-hero hover:bg-hero/90 disabled:cursor-not-allowed disabled:opacity-50'
               type='submit'
               disabled={loading}
-              variant='secondary'
-              style={{ borderRadius: '0.3rem' }}
             >
               {loading ? <Spinner /> : 'Login'}
             </Button>
-            <p className='text-sm text-neutral-500'>
+            <p className='text-sm text-muted-foreground'>
               Don&apos;t have an account?{' '}
               <Link
                 href='/signup'

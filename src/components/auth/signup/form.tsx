@@ -80,12 +80,12 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='text-xs text-neutral-500'>
+                    <FormLabel className='text-muted-foreground/80'>
                       Email
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800'
+                        className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
                         placeholder='Your email address'
                         {...field}
                       />
@@ -102,13 +102,13 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='text-xs text-neutral-500'>
+                    <FormLabel className='text-muted-foreground/80'>
                       Password
                     </FormLabel>
                     <FormControl>
                       <Input
                         type='password'
-                        className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800'
+                        className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
                         placeholder='Your password'
                         {...field}
                       />
@@ -122,19 +122,17 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
 
           <div className='my-4 flex items-center space-x-4'>
             <Button
-              variant='secondary'
-              style={{ borderRadius: '0.3rem' }}
-              className='disabled:cursor-not-allowed disabled:opacity-50'
+              className='bg-hero hover:bg-hero/90 disabled:cursor-not-allowed disabled:opacity-50'
               type='submit'
               disabled={loading}
             >
               {loading ? <Spinner /> : 'Sign up'}
             </Button>
-            <p className='text-sm text-neutral-500'>
+            <p className='text-sm text-muted-foreground'>
               Already have an account?{' '}
               <Link
                 href='/login'
-                className='text-neutral-300 underline underline-offset-4 hover:text-neutral-100'
+                className='text-neutral-300 hover:text-neutral-100'
               >
                 Login
               </Link>

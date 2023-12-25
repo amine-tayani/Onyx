@@ -5,6 +5,7 @@ import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
+import { Spinner } from '../ui/spinner';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -25,23 +26,18 @@ export function ResetPasswordForm({ className, ...props }: UserAuthFormProps) {
       <form onSubmit={onSubmit}>
         <div className='mt-2 grid gap-4'>
           <Input
-            className='border-none bg-neutral-900 hover:bg-neutral-800 focus:bg-neutral-800 '
+            className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
             id='email'
             placeholder='Email Address'
             type='email'
-            autoCapitalize='none'
-            autoComplete='email'
-            autoCorrect='off'
             disabled={isLoading}
           />
           <Button
-            variant='outline'
+            type='submit'
+            className='bg-hero hover:bg-hero/90 disabled:cursor-not-allowed disabled:opacity-50'
             disabled={isLoading}
-            style={{ borderRadius: '0.3rem' }}
-            className=''
           >
-            {isLoading && 'loading...'}
-            Recover Password
+            {isLoading ? <Spinner /> : 'Recover Password'}
           </Button>
           <Link
             href='/login'
