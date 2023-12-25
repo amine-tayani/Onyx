@@ -32,9 +32,7 @@ const VerificationEmail = ({
       <Container className='text-center'>
         <Button
           href={verificationLink}
-          pX={20}
-          pY={16}
-          className='rounded bg-[#000000] text-center text-[12px] font-semibold text-white no-underline'
+          className='rounded bg-[#000000] px-5 py-3 text-center text-[12px] font-semibold text-white no-underline'
         >
           Confirm account
         </Button>

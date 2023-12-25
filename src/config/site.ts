@@ -5,8 +5,9 @@ export const siteConfig = {
   description:
     'Onyx is a Job Application Tracker made for job seekers to help them manage their job applications.',
   links: {
-    twitter: '',
+    twitter: 'https://www.linkedin.com/in/aminety/',
     github: 'https://github.com/amine-tayani/onyx',
+    linkedin: 'https://www.linkedin.com/in/aminety/',
   },
 };
 
