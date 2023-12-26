@@ -126,7 +126,8 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
 
           <div className='my-8 flex items-center space-x-4'>
             <Button
-              className='bg-hero hover:bg-hero/90 disabled:cursor-not-allowed disabled:opacity-50'
+              size='sm'
+              className='bg-hero px-4 hover:bg-hero/90 disabled:cursor-not-allowed disabled:opacity-50'
               type='submit'
               disabled={loading}
             >

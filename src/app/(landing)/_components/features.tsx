@@ -24,7 +24,12 @@ export default function Features() {
               <span>Features</span>
             </div>
             <div className='mt-5 flex justify-center font-display text-[1.7rem] font-extrabold leading-[1.3] text-primary md:text-5xl md:leading-[1.15]'>
-              <h1 className='max-w-2xl'>Job search leveled up</h1>
+              <h1 className='max-w-2xl'>
+                Job search{' '}
+                <span className='bg-gradient-to-l from-purple-800 via-violet-900 to-purple-800 bg-clip-text text-transparent'>
+                  leveled up
+                </span>
+              </h1>
             </div>
             <h3 className='mt-3.5 font-medium text-muted-foreground/70 sm:text-lg'>
               Built for those who seek an opportunity

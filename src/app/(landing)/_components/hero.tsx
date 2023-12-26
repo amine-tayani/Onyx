@@ -16,7 +16,7 @@ export default function Hero() {
             <h1>
               <Balancer>
                 Unleash Your Career{' '}
-                <span className='bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent'>
+                <span className='bg-gradient-to-l from-purple-800 via-violet-900 to-purple-800 bg-clip-text text-transparent'>
                   Potential Sooner
                 </span>
               </Balancer>
