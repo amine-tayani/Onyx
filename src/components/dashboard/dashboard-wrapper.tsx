@@ -17,7 +17,7 @@ export function DashboardLayout() {
       company: 'Discord inc.',
       title: 'Full Stack Developer',
       logo: <Icons.x className='h-8 w-8' />,
-      lastUpdated: '2 days ago',
+      lastUpdated: '3 days ago',
     },
     {
       company: 'Google',
@@ -27,7 +27,7 @@ export function DashboardLayout() {
     },
     {
       company: 'Netflix',
-      title: 'Frontend Developer',
+      title: 'Full Stack Developer',
       logo: <Icons.netflix className='h-9 w-9' />,
       lastUpdated: '1 day ago',
     },
