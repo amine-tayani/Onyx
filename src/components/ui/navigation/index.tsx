@@ -10,6 +10,7 @@ import { MobileNav } from './mobile-nav';
 import { Icons } from '../icons';
 import useScroll from '@/hooks/use-scroll';
 import { cn } from '@/lib/cn';
+import { Skeleton } from '../skeleton';
 
 export function Navigation() {
   const { status, data: session } = useSession();
@@ -22,10 +23,6 @@ export function Navigation() {
       <NavLink slug='Blog' href='/blog' />
       <NavLink slug='Customers' href='/customers' />
       <NavLink slug='Pricing' href='/pricing' />
-      {session?.user ? (
-        <NavLink slug='Profile' href={`/user/${session?.user.id}`} />
-      ) : null}
-      {session?.user ? <NavLink slug='Settings' href='/settings' /> : null}
     </>
   );
 
@@ -51,6 +48,8 @@ export function Navigation() {
             <div className='flex items-center justify-end gap-2'>
               {status === 'authenticated' && session ? (
                 <UserNav />
+              ) : status === 'loading' ? (
+                <Skeleton className='w-28 rounded-lg bg-muted py-4' />
               ) : (
                 <AuthenticationLinks />
               )}

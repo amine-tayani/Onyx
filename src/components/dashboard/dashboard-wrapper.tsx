@@ -9,13 +9,14 @@ import { OnGoingTab } from './ongoing-tab';
 import { AppliedTab } from './applied-tab';
 import { AllApplicationsTab } from './all-applications-tab';
 import { Icons } from '../ui/icons';
+import { PickDate } from './date-range-picker';
 
 export function DashboardLayout() {
   const applications: Application[] = [
     {
       company: 'Discord inc.',
       title: 'Full Stack Developer',
-      logo: <Icons.discord className='h-9 w-9' />,
+      logo: <Icons.x className='h-8 w-8' />,
       lastUpdated: '2 days ago',
     },
     {
@@ -42,10 +43,16 @@ export function DashboardLayout() {
     <>
       <div className='flex-1 space-y-4 p-8 pt-6'>
         <div className='flex items-center justify-between space-y-2'>
-          <h2 className='text-3xl font-bold tracking-tight text-white'>
-            Dashboard
-          </h2>
+          <h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
+          <div className='flex items-center space-x-2'>
+            <PickDate />
+            <Button className='group'>
+              <RotateCw className='mr-2 h-4 w-4 text-neutral-400 transition-transform duration-300 ease-in-out group-hover:rotate-90 group-hover:text-neutral-100' />
+              Sync
+            </Button>
+          </div>
         </div>
+
         <Tabs defaultValue='all' className='space-y-4'>
           <div className='flex justify-between'>
             <TabsList>
@@ -54,10 +61,6 @@ export function DashboardLayout() {
               <TabsTrigger value='applied'>Applied</TabsTrigger>
               <TabsTrigger value='accepted'>Accepted</TabsTrigger>
             </TabsList>
-            <Button className='group'>
-              <RotateCw className='mr-2 h-4 w-4 text-neutral-400 transition-transform duration-300 ease-in-out group-hover:rotate-90 group-hover:text-neutral-100' />
-              Sync
-            </Button>
           </div>
           <AllApplicationsTab applications={applications} />
           <AcceptedTab applications={applications} />
