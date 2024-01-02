@@ -4,16 +4,36 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/cn';
 import { buttonVariants } from '@/components/ui/button';
+import { useSession } from 'next-auth/react';
 
-interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-  items: {
-    href: string;
-    title: string;
-  }[];
-}
+interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {}
 
-export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
+export function SidebarNav({ className, ...props }: SidebarNavProps) {
   const pathname = usePathname();
+  const { data: session } = useSession();
+
+  const items = [
+    {
+      title: 'My Profile',
+      href: `/user/${session?.user?.id}`,
+    },
+    {
+      title: 'General',
+      href: `/user/${session?.user?.id}/account`,
+    },
+    {
+      title: 'Preferences',
+      href: `/user/${session?.user?.id}/appearance`,
+    },
+    {
+      title: 'Notifications',
+      href: `/user/${session?.user?.id}/notifications`,
+    },
+    {
+      title: 'Security',
+      href: `/user/${session?.user?.id}/security`,
+    },
+  ];
 
   return (
     <nav
@@ -30,7 +50,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
           className={cn(
             buttonVariants({ variant: 'sidenav' }),
             pathname === item.href
-              ? 'bg-primary text-foreground hover:bg-muted'
+              ? 'bg-muted text-primary hover:bg-muted'
               : 'hover:bg-muted',
             'justify-start'
           )}

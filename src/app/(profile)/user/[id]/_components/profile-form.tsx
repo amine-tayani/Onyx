@@ -1,10 +1,10 @@
 'use client';
 
-import Link from 'next/link';
+import * as React from 'react';
+import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
-import * as z from 'zod';
-
+import { UserProfileProps } from './props';
 import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,56 +13,30 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
-
-const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: 'Username must be at least 2 characters.',
-    })
-    .max(30, {
-      message: 'Username must not be longer than 30 characters.',
-    }),
-  email: z
-    .string({
-      required_error: 'Please select an email to display.',
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: 'Please enter a valid URL.' }),
-      })
-    )
-    .optional(),
-});
+import { Label } from '@/components/ui/label';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Skeleton } from '@/components/ui/skeleton';
+import { profileFormSchema } from './profile-form-schema';
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: 'I own a computer.',
-  urls: [
-    { value: 'https://shadcn.com' },
-    { value: 'http://twitter.com/shadcn' },
-  ],
-};
+export function ProfileForm({ user }: UserProfileProps) {
+  const [selectedImage, setSelectedImage] = React.useState<File | null>(null);
 
-export function ProfileForm() {
+  // This should come from the supabase.
+  const defaultValues: Partial<ProfileFormValues> = {
+    name: '',
+    email: `${user.email}`,
+    bio: '',
+    urls: [{ value: '' }],
+    media: undefined,
+  };
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
@@ -87,20 +61,69 @@ export function ProfileForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
         <FormField
           control={form.control}
-          name='username'
+          name='media'
+          render={({ field }) => (
+            <>
+              <FormItem>
+                <Label className='text-neutral-300'>Profile picture</Label>
+                <FormControl>
+                  <Button size='lg' type='button'>
+                    <input
+                      type='file'
+                      className='hidden'
+                      id='fileInput'
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      onChange={(e) => {
+                        field.onChange(e.target.files);
+                        setSelectedImage(e.target.files?.[0] || null);
+                      }}
+                      ref={field.ref}
+                    />
+                    <label
+                      htmlFor='fileInput'
+                      className='text-neutral-90 inline-flex cursor-pointer  items-center rounded-md bg-blue-500 hover:bg-blue-600'
+                    >
+                      <span className='whitespace-nowrap'>
+                        choose your image
+                      </span>
+                    </label>
+                  </Button>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            </>
+          )}
+        />
+        <Avatar>
+          <AvatarImage
+            // @ts-ignore
+            src={
+              selectedImage ||
+              'https://avatars.githubusercontent.com/u/62437851?v=4'
+            }
+            alt=''
+          />
+          <AvatarFallback>
+            <Skeleton className='h-8 w-8 rounded-full' />
+          </AvatarFallback>
+        </Avatar>
+        <FormField
+          control={form.control}
+          name='name'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <Label className='text-neutral-300'>Name</Label>
               <FormControl>
-                <Input placeholder='shadcn' {...field} />
+                <Input
+                  className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
+                  placeholder='write your full name.'
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -110,23 +133,15 @@ export function ProfileForm() {
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select a verified email to display' />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value='m@example.com'>m@example.com</SelectItem>
-                  <SelectItem value='m@google.com'>m@google.com</SelectItem>
-                  <SelectItem value='m@support.com'>m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                You can manage verified email addresses in your{' '}
-                <Link href='/examples/forms'>email settings</Link>.
-              </FormDescription>
+              <Label className='text-neutral-300'>Email</Label>
+              <FormControl>
+                <Input
+                  className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
+                  placeholder='Edit your email'
+                  {...field}
+                />
+              </FormControl>
+
               <FormMessage />
             </FormItem>
           )}
@@ -136,18 +151,15 @@ export function ProfileForm() {
           name='bio'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bio</FormLabel>
+              <Label className='text-neutral-300'>Bio</Label>
               <FormControl>
                 <Textarea
-                  placeholder='Tell us a little bit about yourself'
-                  className='resize-none'
+                  className='resize-none border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
+                  placeholder='Tell us a bit about yourself'
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -160,14 +172,19 @@ export function ProfileForm() {
               name={`urls.${index}.value`}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className={cn(index !== 0 && 'sr-only')}>
+                  <Label
+                    className={cn(index !== 0 && 'sr-only', 'text-neutral-300')}
+                  >
                     URLs
-                  </FormLabel>
+                  </Label>
                   <FormDescription className={cn(index !== 0 && 'sr-only')}>
                     Add links to your website, blog, or social media profiles.
                   </FormDescription>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -176,7 +193,6 @@ export function ProfileForm() {
           ))}
           <Button
             type='button'
-            variant='outline'
             size='sm'
             className='mt-2'
             onClick={() => append({ value: '' })}
