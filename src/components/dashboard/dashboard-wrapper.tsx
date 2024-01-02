@@ -14,9 +14,9 @@ import { PickDate } from './date-range-picker';
 export function DashboardLayout() {
   const applications: Application[] = [
     {
-      company: 'Discord inc.',
-      title: 'Full Stack Developer',
-      logo: <Icons.x className='h-8 w-8' />,
+      company: 'X inc.',
+      title: 'Frontend Engineer',
+      logo: <Icons.x className='h-7 w-7' />,
       lastUpdated: '3 days ago',
     },
     {
@@ -43,7 +43,9 @@ export function DashboardLayout() {
     <>
       <div className='flex-1 space-y-4 p-8 pt-6'>
         <div className='flex items-center justify-between space-y-2'>
-          <h2 className='text-3xl font-bold tracking-tight'>Dashboard</h2>
+          <h2 className='text-3xl font-bold tracking-tight'>
+            Welcome back Amine
+          </h2>
           <div className='flex items-center space-x-2'>
             <PickDate />
             <Button className='group'>
