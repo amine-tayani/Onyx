@@ -9,6 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        sidenav:
+          ' text-muted-foreground hover:bg-primary hover:text-neutral-400',
         default:
           'bg-neutral-800 text-neutral-50 hover:bg-neutral-700 hover:text-neutral-100',
         destructive:

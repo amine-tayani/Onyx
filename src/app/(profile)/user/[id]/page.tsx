@@ -1,3 +1,7 @@
+import { notFound } from 'next/navigation';
+import prisma from '@/lib/db/prisma';
+import UserProfile from './_components/user-profile';
+
 interface Props {
   params: {
     id: string;
@@ -5,13 +9,22 @@ interface Props {
 }
 
 export default async function Profile({ params: { id } }: Props) {
-  return (
-    <div className='flex-1 space-y-4 p-8 pt-6'>
-      <div className='flex items-center justify-between space-y-2'>
-        <h2 className='text-3xl font-bold tracking-tight text-white'>
-          {id}&#39;s Profile
-        </h2>
-      </div>
-    </div>
-  );
+  const user = await prisma.user.findFirst({
+    where: {
+      id: {
+        equals: id,
+      },
+    },
+    select: {
+      id: true,
+      createdAt: true,
+      image: true,
+      name: true,
+      email: true,
+    },
+  });
+
+  if (!user) return notFound();
+
+  return <UserProfile user={user} />;
 }
