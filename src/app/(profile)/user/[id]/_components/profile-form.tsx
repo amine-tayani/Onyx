@@ -26,7 +26,9 @@ import { profileFormSchema } from './profile-form-schema';
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 export function ProfileForm({ user }: UserProfileProps) {
-  const [selectedImage, setSelectedImage] = React.useState<File | null>(null);
+  const [selectedImage, setSelectedImage] = React.useState<File | undefined>(
+    undefined
+  );
 
   // This should come from the supabase.
   const defaultValues: Partial<ProfileFormValues> = {
@@ -52,9 +54,7 @@ export function ProfileForm({ user }: UserProfileProps) {
     toast({
       title: 'You submitted the following values:',
       description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
+        <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
       ),
     });
   }
@@ -66,11 +66,11 @@ export function ProfileForm({ user }: UserProfileProps) {
           control={form.control}
           name='media'
           render={({ field }) => (
-            <>
-              <FormItem>
-                <Label className='text-neutral-300'>Profile picture</Label>
-                <FormControl>
-                  <Button size='lg' type='button'>
+            <FormItem>
+              <Label className='text-neutral-300'>Profile picture</Label>
+              <FormControl>
+                <div className='flex space-x-4'>
+                  <Button type='button' size='sm'>
                     <input
                       type='file'
                       className='hidden'
@@ -79,38 +79,34 @@ export function ProfileForm({ user }: UserProfileProps) {
                       name={field.name}
                       onChange={(e) => {
                         field.onChange(e.target.files);
-                        setSelectedImage(e.target.files?.[0] || null);
+                        setSelectedImage(e.target.files?.[0]);
                       }}
                       ref={field.ref}
                     />
-                    <label
-                      htmlFor='fileInput'
-                      className='text-neutral-90 inline-flex cursor-pointer  items-center rounded-md bg-blue-500 hover:bg-blue-600'
-                    >
-                      <span className='whitespace-nowrap'>
-                        choose your image
-                      </span>
+                    <label htmlFor='fileInput' className=''>
+                      <span className='whitespace-nowrap'>Upload</span>
                     </label>
                   </Button>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            </>
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
         />
         <Avatar>
           <AvatarImage
-            // @ts-ignore
+            //@ts-ignore
             src={
-              selectedImage ||
+              selectedImage ??
               'https://avatars.githubusercontent.com/u/62437851?v=4'
             }
             alt=''
           />
           <AvatarFallback>
-            <Skeleton className='h-8 w-8 rounded-full' />
+            <Skeleton className='h-8 w-8 rounded-full bg-background' />
           </AvatarFallback>
         </Avatar>
+
         <FormField
           control={form.control}
           name='name'
@@ -120,7 +116,7 @@ export function ProfileForm({ user }: UserProfileProps) {
               <FormControl>
                 <Input
                   className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
-                  placeholder='write your full name.'
+                  placeholder='Full name.'
                   {...field}
                 />
               </FormControl>
@@ -194,13 +190,15 @@ export function ProfileForm({ user }: UserProfileProps) {
           <Button
             type='button'
             size='sm'
-            className='mt-2'
+            className='mt-2 text-neutral-300'
             onClick={() => append({ value: '' })}
           >
             Add URL
           </Button>
         </div>
-        <Button type='submit'>Update profile</Button>
+        <Button className='text-neutral-300' type='submit'>
+          Update profile
+        </Button>
       </form>
     </Form>
   );
