@@ -32,38 +32,37 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
       password: '',
     },
   });
+  const router = useRouter();
   const [loading, setLoading] = React.useState(false);
   const { toast } = useToast();
-  const router = useRouter();
+  const callbackUrl = '/dashboard';
 
-  async function onSubmit(data: FormSchema) {
+  const onSubmit = async (data: FormSchema) => {
     try {
       setLoading(true);
-      const response = await signIn('credentials', {
+      const res = await signIn('credentials', {
         redirect: false,
-        email: data.email,
-        password: data.password,
+        callbackUrl,
+        ...data,
       });
 
-      if (!response?.ok) {
-        const errorMessage = await response?.error;
+      if (!res) {
         toast({
           variant: 'destructive',
-          description: <span>{errorMessage}</span>,
+          description: 'Something went wrong, maybe try again.',
         });
-        setLoading(false);
-      } else {
+      } else if (res.error) {
         toast({
-          variant: 'mytheme',
-          description: 'You have Logged in successfully',
+          variant: 'destructive',
+          description: await res.error,
         });
-        setLoading(false);
-        router.push('/dashboard');
-      }
+      } else router.push(callbackUrl);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>

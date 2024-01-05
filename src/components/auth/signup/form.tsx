@@ -48,24 +48,22 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
       });
 
       if (!response.ok) {
-        const errorMessage = await response.json();
         toast({
           variant: 'destructive',
-          description: <span>{errorMessage}</span>,
+          description: await response.json(),
         });
-        setLoading(false);
-        router.refresh();
       } else {
         toast({
           variant: 'mytheme',
           title: 'Account created.',
           description: 'Check you email for more infos.',
         });
-        setLoading(false);
         router.push('/login');
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 

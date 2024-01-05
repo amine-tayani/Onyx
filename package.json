@@ -15,6 +15,11 @@
     "prettier": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\" --ignore-unknown",
     "prettier:check": "prettier --check \"**/*.{css,js,json,jsx,ts,tsx}\" --ignore-unknown",
     "db:seed": "ts-node ./prisma/seed.ts",
+    "db:push": "dotenv -e .env.local prisma db push",
+    "db:format": "dotenv -e .env.local prisma format",
+    "db:generate": "dotenv -e .env.local prisma generate",
+    "db:studio": "dotenv -e .env.local prisma studio",
+    "db:reset": "dotenv -e .env.local prisma db push -- --force-reset",
     "commit": "cz"
   },
   "dependencies": {
@@ -77,6 +82,8 @@
     "commitizen": "^4.3.0",
     "cross-env": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.3.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-tailwindcss": "^3.13.0",

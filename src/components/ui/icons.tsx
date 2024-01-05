@@ -95,7 +95,7 @@ export const Icons = {
           gradientTransform='translate(.4834 .49419) scale(1 .55088) translate(-.4834 -.49419)'
         >
           <stop offset='0'></stop>
-          <stop stop-opacity='0' offset='1'></stop>
+          <stop stopOpacity='0' offset='1'></stop>
         </radialGradient>
       </defs>
       <polygon points='1.8011e-7 1.1371e-6 255.9 1.1371e-6 255.9 255.9 1.8011e-7 255.9'></polygon>
