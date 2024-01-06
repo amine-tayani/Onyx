@@ -22,7 +22,7 @@ export default async function DashboardLayout({
             <TeamSwitcher />
             <div className='ml-auto flex items-center space-x-4'>
               <Search />
-              <UserNav />
+              <UserNav align='end' />
             </div>
           </div>
         </div>

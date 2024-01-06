@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { SortAscIcon, CheckIcon, Plus } from 'lucide-react';
+import { CheckIcon, Plus, ChevronsUpDown } from 'lucide-react';
 
 import { cn } from '@/lib/cn';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -97,7 +97,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
               <AvatarFallback>SC</AvatarFallback>
             </Avatar>
             {selectedTeam.label}
-            <SortAscIcon className='ml-auto h-4 w-4 shrink-0 opacity-50' />
+            <ChevronsUpDown className='ml-auto h-4 w-4 shrink-0 opacity-50' />
           </Button>
         </PopoverTrigger>
         <PopoverContent className='w-[200px] p-0'>

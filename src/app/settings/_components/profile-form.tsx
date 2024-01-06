@@ -100,7 +100,7 @@ export function ProfileForm({ user }: UserProfileProps) {
               selectedImage ??
               'https://avatars.githubusercontent.com/u/62437851?v=4'
             }
-            alt=''
+            alt='avatar'
           />
           <AvatarFallback>
             <Skeleton className='h-8 w-8 rounded-full bg-background' />

@@ -1,6 +1,7 @@
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -14,11 +15,17 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Skeleton } from '../skeleton';
 import { LogoutButton } from './logout-button';
-import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-export default function UserNav() {
-  const { data: session } = useSession();
+interface UserNavProps {
+  align?: 'center' | 'end' | 'start';
+}
+
+export default function UserNav({ align }: UserNavProps) {
+  const { data: session, status } = useSession();
+
+  if (status === 'loading')
+    return <Skeleton className='h-8 w-8 rounded-full bg-muted-foreground/80' />;
 
   if (!session || !session.user) {
     return null;
@@ -30,8 +37,11 @@ export default function UserNav() {
         <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
           <Avatar className='h-8 w-8'>
             <AvatarImage
-              alt='@amine'
-              src='https://ui-avatars.com/api/?name=amine'
+              alt={session.user.name ?? 'avatar'}
+              src={
+                session.user.image ??
+                'https://avatars.githubusercontent.com/u/62437851?v=4'
+              }
             />
             <AvatarFallback>
               <Skeleton className='h-8 w-8 rounded-full py-3' />
@@ -39,7 +49,7 @@ export default function UserNav() {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-56' align='end' forceMount>
+      <DropdownMenuContent className='w-56' align={align} forceMount>
         <DropdownMenuLabel className='font-normal'>
           <div className='flex flex-col space-y-1'>
             <p className='text-sm font-medium leading-none'>Amine</p>
@@ -50,16 +60,16 @@ export default function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href={`/user/${session.user.id}`}>
+          <Link href='/profile'>
             <DropdownMenuItem>
               Profile
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+              <DropdownMenuShortcut>⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
-          </Link>{' '}
+          </Link>
           <Link href='/dashboard'>
             <DropdownMenuItem>
               Dashboard
-              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+              <DropdownMenuShortcut>⌘X</DropdownMenuShortcut>
             </DropdownMenuItem>
           </Link>
           <Link href='/settings'>
