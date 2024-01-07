@@ -23,6 +23,8 @@ export function Navigation() {
       <NavLink slug='Blog' href='/blog' />
       <NavLink slug='Customers' href='/customers' />
       <NavLink slug='Pricing' href='/pricing' />
+      {session?.user ? <NavLink slug='Dashboard' href='/dashboard' /> : null}
+      {!session ? <NavLink slug='Login' href='/login' /> : null}
     </>
   );
 
@@ -55,22 +57,6 @@ export function Navigation() {
               )}
               <MobileNav>
                 <NavLinks />
-                {!session && (
-                  <>
-                    <Link
-                      className='w-32 rounded bg-muted px-4 py-1.5 text-center text-sm font-medium text-primary transition-colors hover:bg-muted/80'
-                      href='/login'
-                    >
-                      Log In{' '}
-                    </Link>
-                    <Link
-                      className='w-32 rounded bg-neutral-200 px-4 py-1.5 text-center text-sm font-medium text-primary-foreground transition-colors hover:bg-primary'
-                      href='/signup'
-                    >
-                      Sign Up{' '}
-                    </Link>
-                  </>
-                )}
               </MobileNav>
             </div>
           </div>
