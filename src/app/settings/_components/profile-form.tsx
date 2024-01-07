@@ -62,61 +62,65 @@ export function ProfileForm({ user }: UserProfileProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-        <FormField
-          control={form.control}
-          name='media'
-          render={({ field }) => (
-            <FormItem>
-              <Label className='text-neutral-300'>Profile picture</Label>
-              <FormControl>
-                <div className='flex space-x-4'>
-                  <Button type='button' size='sm'>
-                    <input
-                      type='file'
-                      className='hidden'
-                      id='fileInput'
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      onChange={(e) => {
-                        field.onChange(e.target.files);
-                        setSelectedImage(e.target.files?.[0]);
-                      }}
-                      ref={field.ref}
-                    />
-                    <label htmlFor='fileInput' className=''>
-                      <span className='whitespace-nowrap'>Upload</span>
-                    </label>
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Avatar>
-          <AvatarImage
-            //@ts-ignore
-            src={
-              selectedImage ??
-              'https://avatars.githubusercontent.com/u/62437851?v=4'
-            }
-            alt='avatar'
+        <div className='flex items-center space-x-4'>
+          <Avatar>
+            <AvatarImage
+              //@ts-ignore
+              src={
+                selectedImage ??
+                'https://avatars.githubusercontent.com/u/62437851?v=4'
+              }
+              alt='avatar'
+              width={50}
+              className='h-14 w-14'
+            />
+            <AvatarFallback>
+              <Skeleton className='h-14 w-14 rounded-full bg-background' />
+            </AvatarFallback>
+          </Avatar>
+          <FormField
+            control={form.control}
+            name='media'
+            render={({ field }) => (
+              <FormItem>
+                <Label className='text-neutral-300'>Profile picture</Label>
+                <FormControl>
+                  <div className='flex space-x-4'>
+                    <Button type='button' size='sm'>
+                      <input
+                        type='file'
+                        className='hidden'
+                        id='fileInput'
+                        onBlur={field.onBlur}
+                        name={field.name}
+                        onChange={(e) => {
+                          field.onChange(e.target.files);
+                          setSelectedImage(e.target.files?.[0]);
+                        }}
+                        ref={field.ref}
+                      />
+                      <label htmlFor='fileInput' className=''>
+                        <span className='whitespace-nowrap'>Upload Avatar</span>
+                      </label>
+                    </Button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          <AvatarFallback>
-            <Skeleton className='h-8 w-8 rounded-full bg-background' />
-          </AvatarFallback>
-        </Avatar>
+        </div>
 
         <FormField
           control={form.control}
           name='name'
           render={({ field }) => (
             <FormItem>
-              <Label className='text-neutral-300'>Name</Label>
+              <Label className='text-neutral-300'>Username</Label>
               <FormControl>
                 <Input
                   className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
-                  placeholder='Full name.'
+                  placeholder='Your name'
                   {...field}
                 />
               </FormControl>
@@ -147,7 +151,7 @@ export function ProfileForm({ user }: UserProfileProps) {
           name='bio'
           render={({ field }) => (
             <FormItem>
-              <Label className='text-neutral-300'>Bio</Label>
+              <Label className='text-neutral-300'>About</Label>
               <FormControl>
                 <Textarea
                   className='resize-none border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
@@ -155,7 +159,6 @@ export function ProfileForm({ user }: UserProfileProps) {
                   {...field}
                 />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
@@ -197,7 +200,7 @@ export function ProfileForm({ user }: UserProfileProps) {
           </Button>
         </div>
         <Button className='text-neutral-300' type='submit'>
-          Update profile
+          Update
         </Button>
       </form>
     </Form>

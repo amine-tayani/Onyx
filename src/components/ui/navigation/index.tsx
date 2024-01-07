@@ -24,7 +24,7 @@ export function Navigation() {
       <NavLink slug='Customers' href='/customers' />
       <NavLink slug='Pricing' href='/pricing' />
       {session?.user ? <NavLink slug='Dashboard' href='/dashboard' /> : null}
-      {!session ? <NavLink slug='Login' href='/login' /> : null}
+      {status === 'unauthenticated' && <NavLink slug='Login' href='/login' />}
     </>
   );
 

@@ -17,7 +17,9 @@ export const profileFormSchema = z.object({
       required_error: 'Please type an email.',
     })
     .email(),
-  bio: z.string().max(160),
+  bio: z.string().max(160, {
+    message: 'Bio is too long, 160 characters max.',
+  }),
   urls: z
     .array(
       z.object({
