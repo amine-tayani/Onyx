@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
 import { usePathname } from 'next/navigation';
-import { Bell, Wrench, Settings, Shield, UserSquare } from 'lucide-react';
+import { Bell, Wrench, Settings, UserSquare, ShieldHalf } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import UserNav from '@/components/ui/navigation/user-nav';
 
@@ -36,7 +36,7 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
     {
       title: 'Security',
       href: '/settings/security',
-      icon: Shield,
+      icon: ShieldHalf,
     },
   ];
 
