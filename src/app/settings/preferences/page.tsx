@@ -1,4 +1,5 @@
 import { Separator } from '@/components/ui/separator';
+import { AppearanceForm } from './appearance-form';
 
 export default function PreferencesPage() {
   return (
@@ -10,6 +11,7 @@ export default function PreferencesPage() {
         </p>
       </div>
       <Separator />
+      <AppearanceForm />
     </div>
   );
 }
