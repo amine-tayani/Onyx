@@ -10,10 +10,10 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -53,20 +53,18 @@ export function AccountForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
         <FormField
           name='password'
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='text-muted-foreground/80'>
-                Old password
-              </FormLabel>
+              <Label className='text-neutral-300'>Current password</Label>
               <FormControl>
                 <Input
                   type='password'
                   className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
-                  placeholder='******************'
+                  placeholder=''
                   {...field}
                 />
               </FormControl>
@@ -79,14 +77,12 @@ export function AccountForm() {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='text-muted-foreground/80'>
-                New Password
-              </FormLabel>
+              <Label className='text-neutral-300'>Your Password</Label>
               <FormControl>
                 <Input
                   type='password'
                   className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
-                  placeholder='******************'
+                  placeholder='Enter a new password'
                   {...field}
                 />
               </FormControl>
@@ -101,7 +97,7 @@ export function AccountForm() {
           type='submit'
           disabled={loading}
         >
-          {loading ? <Spinner /> : 'Update'}
+          {loading ? <Spinner /> : 'Save Changes'}
         </Button>
       </form>
     </Form>

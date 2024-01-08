@@ -22,7 +22,7 @@ import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { profileFormSchema } from './profile-form-schema';
-import { Upload } from 'lucide-react';
+import { PlusIcon, Trash2, Upload } from 'lucide-react';
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
@@ -75,65 +75,69 @@ export function ProfileForm({ user }: UserProfileProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-        <div className='flex items-center space-x-4'>
-          <Avatar>
-            <AvatarImage
-              src={
-                preview
-                  ? preview
-                  : 'https://avatars.githubusercontent.com/u/62437851?v=4'
-              }
-              alt='avatar'
-              className='h-14 w-14 object-cover object-center'
-              width={40}
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center space-x-4'>
+            <Avatar>
+              <AvatarImage
+                src={
+                  preview
+                    ? preview
+                    : 'https://avatars.githubusercontent.com/u/62437851?v=4'
+                }
+                alt='avatar'
+                className='h-14 w-14 object-cover object-center'
+                width={40}
+              />
+              <AvatarFallback>
+                <Skeleton className='h-14 w-14 rounded-full bg-background' />
+              </AvatarFallback>
+            </Avatar>
+            <FormField
+              control={form.control}
+              name='media'
+              render={({ field }) => (
+                <FormItem>
+                  <Label className='text-neutral-300'>Profile picture</Label>
+                  <FormControl>
+                    <div className='flex space-x-4'>
+                      <Button type='button' size='sm'>
+                        <Input
+                          type='file'
+                          className='hidden'
+                          id='fileInput'
+                          name={field.name}
+                          disabled={form.formState.isLoading}
+                          onChange={(e) => {
+                            const { files, displayUrl } = getImageData(e);
+                            setPreview(displayUrl);
+                            field.onChange(files);
+                            toast({
+                              variant: 'mytheme',
+                              description: 'Uploading Picture...',
+                            });
+                          }}
+                          ref={field.ref}
+                        />
+                        <label
+                          htmlFor='fileInput'
+                          className='flex items-center space-x-2'
+                        >
+                          <Upload className='h-4 w-4' />
+                          <span className='whitespace-nowrap'>Upload</span>
+                        </label>
+                      </Button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <AvatarFallback>
-              <Skeleton className='h-14 w-14 rounded-full bg-background' />
-            </AvatarFallback>
-          </Avatar>
-          <FormField
-            control={form.control}
-            name='media'
-            render={({ field }) => (
-              <FormItem>
-                <Label className='text-neutral-300'>Profile picture</Label>
-                <FormControl>
-                  <div className='flex space-x-4'>
-                    <Button type='button' size='sm'>
-                      <Input
-                        type='file'
-                        className='hidden'
-                        id='fileInput'
-                        name={field.name}
-                        disabled={form.formState.isLoading}
-                        onChange={(e) => {
-                          const { files, displayUrl } = getImageData(e);
-                          setPreview(displayUrl);
-                          field.onChange(files);
-                          toast({
-                            variant: 'mytheme',
-                            description: 'Uploading Picture...',
-                          });
-                        }}
-                        ref={field.ref}
-                      />
-                      <label
-                        htmlFor='fileInput'
-                        className='flex items-center space-x-2'
-                      >
-                        <Upload className='h-4 w-4' />
-                        <span className='whitespace-nowrap'>Upload</span>
-                      </label>
-                    </Button>
-                  </div>
-                </FormControl>
-                <FormMessage />
-                <FormDescription>
-                  Accepted file types: .png, .jpg. Max file size: 2MB.
-                </FormDescription>
-              </FormItem>
-            )}
-          />
+          </div>
+          {/* show only when we have image in db otherwise hide it */}
+          <Button type='submit' size='sm'>
+            <Trash2 className='mr-2 h-4 w-4' />
+            <span>delete</span>
+          </Button>
         </div>
 
         <FormField
@@ -188,7 +192,7 @@ export function ProfileForm({ user }: UserProfileProps) {
             </FormItem>
           )}
         />
-        <div>
+        <div className='relative'>
           {fields.map((field, index) => (
             <FormField
               control={form.control}
@@ -218,14 +222,15 @@ export function ProfileForm({ user }: UserProfileProps) {
           <Button
             type='button'
             size='sm'
-            className='mt-2 text-neutral-300'
+            className='absolute right-0 top-0 text-neutral-300'
             onClick={() => append({ value: '' })}
           >
+            <PlusIcon className='mr-2 h-4 w-4' />
             Add URL
           </Button>
         </div>
         <Button className='text-neutral-300' type='submit'>
-          Update
+          Save Changes
         </Button>
       </form>
     </Form>

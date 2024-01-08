@@ -1,5 +1,6 @@
 import { Separator } from '@/components/ui/separator';
 import { AccountForm } from './account-form';
+import { DeleteAccountForm } from './delete-account';
 
 export default function AccountPage() {
   return (
@@ -12,6 +13,8 @@ export default function AccountPage() {
       </div>
       <Separator />
       <AccountForm />
+      <Separator />
+      <DeleteAccountForm />
     </div>
   );
 }

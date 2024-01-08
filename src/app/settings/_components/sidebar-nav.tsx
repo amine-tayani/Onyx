@@ -25,7 +25,7 @@ export function SidebarNav({ className, ...props }: SidebarNavProps) {
     },
     {
       title: 'Preferences',
-      href: '/settings/appearance',
+      href: '/settings/preferences',
       icon: Wrench,
     },
     {
