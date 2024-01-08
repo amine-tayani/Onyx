@@ -1,11 +1,17 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { cn } from '@/lib/cn';
+import { FormSchema, loginSchema } from './validators';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import Link from 'next/link';
 import { useToast } from '@/components/ui/use-toast';
+import { useForm } from 'react-hook-form';
+import { Spinner } from '@/components/ui/spinner';
 import {
   Form,
   FormControl,
@@ -14,12 +20,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { useForm } from 'react-hook-form';
-import { FormSchema, loginSchema } from './validators';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
-import { Spinner } from '@/components/ui/spinner';
-import { useRouter } from 'next/navigation';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -32,8 +32,8 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
       password: '',
     },
   });
-  const router = useRouter();
   const [loading, setLoading] = React.useState(false);
+  const router = useRouter();
   const { toast } = useToast();
   const callbackUrl = '/dashboard';
 
@@ -46,17 +46,12 @@ export function LoginAccountForm({ className, ...props }: UserAuthFormProps) {
         ...data,
       });
 
-      if (!res) {
-        toast({
-          variant: 'destructive',
-          description: 'Something went wrong, maybe try again.',
-        });
-      } else if (res.error) {
+      if (res?.error)
         toast({
           variant: 'destructive',
           description: await res.error,
         });
-      } else router.push(callbackUrl);
+      router.push(callbackUrl);
     } catch (err) {
       console.log(err);
     } finally {

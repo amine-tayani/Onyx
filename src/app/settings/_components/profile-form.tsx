@@ -22,13 +22,26 @@ import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { profileFormSchema } from './profile-form-schema';
+import { Upload } from 'lucide-react';
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 export function ProfileForm({ user }: UserProfileProps) {
-  const [selectedImage, setSelectedImage] = React.useState<File | undefined>(
-    undefined
-  );
+  const [preview, setPreview] = React.useState('');
+
+  function getImageData(event: React.ChangeEvent<HTMLInputElement>) {
+    const dataTransfer = new DataTransfer();
+
+    // Add newly uploaded images
+    Array.from(event.target.files!).forEach((image) =>
+      dataTransfer.items.add(image)
+    );
+
+    const files = dataTransfer.files;
+    const displayUrl = URL.createObjectURL(event.target.files![0]);
+
+    return { files, displayUrl };
+  }
 
   // This should come from the supabase.
   const defaultValues: Partial<ProfileFormValues> = {
@@ -65,14 +78,14 @@ export function ProfileForm({ user }: UserProfileProps) {
         <div className='flex items-center space-x-4'>
           <Avatar>
             <AvatarImage
-              //@ts-ignore
               src={
-                selectedImage ??
-                'https://avatars.githubusercontent.com/u/62437851?v=4'
+                preview
+                  ? preview
+                  : 'https://avatars.githubusercontent.com/u/62437851?v=4'
               }
               alt='avatar'
-              width={50}
-              className='h-14 w-14'
+              className='h-14 w-14 object-cover object-center'
+              width={40}
             />
             <AvatarFallback>
               <Skeleton className='h-14 w-14 rounded-full bg-background' />
@@ -87,25 +100,37 @@ export function ProfileForm({ user }: UserProfileProps) {
                 <FormControl>
                   <div className='flex space-x-4'>
                     <Button type='button' size='sm'>
-                      <input
+                      <Input
                         type='file'
                         className='hidden'
                         id='fileInput'
-                        onBlur={field.onBlur}
                         name={field.name}
+                        disabled={form.formState.isLoading}
                         onChange={(e) => {
-                          field.onChange(e.target.files);
-                          setSelectedImage(e.target.files?.[0]);
+                          const { files, displayUrl } = getImageData(e);
+                          setPreview(displayUrl);
+                          field.onChange(files);
+                          toast({
+                            variant: 'mytheme',
+                            description: 'Uploading Picture...',
+                          });
                         }}
                         ref={field.ref}
                       />
-                      <label htmlFor='fileInput' className=''>
-                        <span className='whitespace-nowrap'>Upload Avatar</span>
+                      <label
+                        htmlFor='fileInput'
+                        className='flex items-center space-x-2'
+                      >
+                        <Upload className='h-4 w-4' />
+                        <span className='whitespace-nowrap'>Upload</span>
                       </label>
                     </Button>
                   </div>
                 </FormControl>
                 <FormMessage />
+                <FormDescription>
+                  Accepted file types: .png, .jpg. Max file size: 2MB.
+                </FormDescription>
               </FormItem>
             )}
           />
