@@ -18,28 +18,21 @@ import { useState } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 
 const accountFormSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
+  current_password: z.string({
+    required_error: 'Password is required.',
   }),
-  password: z.string({
+  new_password: z.string({
     required_error: 'Password is required.',
   }),
 });
 
 type AccountFormValues = z.infer<typeof accountFormSchema>;
 
-// This should comes from supabase.
-const defaultValues: Partial<AccountFormValues> = {
-  // name: "Your name",
-  // dob: new Date("2023-01-23"),
-};
-
 export function AccountForm() {
   const [loading] = useState(false);
 
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
-    defaultValues,
   });
 
   function onSubmit(data: AccountFormValues) {
@@ -55,7 +48,7 @@ export function AccountForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
         <FormField
-          name='password'
+          name='current_password'
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -73,7 +66,7 @@ export function AccountForm() {
           )}
         />
         <FormField
-          name='password'
+          name='new_password'
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -93,7 +86,7 @@ export function AccountForm() {
 
         <Button
           size='sm'
-          className=' disabled:cursor-not-allowed disabled:opacity-50'
+          className='text-neutral-300 disabled:cursor-not-allowed disabled:opacity-50'
           type='submit'
           disabled={loading}
         >

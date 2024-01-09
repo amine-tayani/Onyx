@@ -105,7 +105,9 @@ export function AppearanceForm() {
           )}
         />
 
-        <Button type='submit'>Update preferences</Button>
+        <Button className='text-neutral-300' type='submit'>
+          Update
+        </Button>
       </form>
     </Form>
   );
