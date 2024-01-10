@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 export function AddApplicationButton() {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button className='group'>
           <Plus className='mr-2 h-5 w-5 text-neutral-400 transition-colors duration-300 ease-in-out group-hover:text-neutral-100' />
           Add Application
