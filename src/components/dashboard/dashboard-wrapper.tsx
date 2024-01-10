@@ -9,7 +9,7 @@ import { OnGoingTab } from './ongoing-tab';
 import { AppliedTab } from './applied-tab';
 import { AllApplicationsTab } from './all-applications-tab';
 import { Icons } from '../ui/icons';
-import { PickDate } from './date-range-picker';
+import { AddApplicationButton } from './applications/add-button';
 
 export function DashboardLayout() {
   const applications: Application[] = [
@@ -47,7 +47,7 @@ export function DashboardLayout() {
             Welcome back Amine
           </h2>
           <div className='flex items-center space-x-2'>
-            <PickDate />
+            <AddApplicationButton />
             <Button className='group'>
               <RotateCw className='mr-2 h-4 w-4 text-neutral-400 transition-transform duration-300 ease-in-out group-hover:rotate-90 group-hover:text-neutral-100' />
               Sync
