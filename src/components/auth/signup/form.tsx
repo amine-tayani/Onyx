@@ -31,7 +31,7 @@ export function CreateAccountForm({ className, ...props }: UserAuthFormProps) {
   const router = useRouter();
   const form = useForm<SignupFormSchema>({
     resolver: zodResolver(SignupSchema),
-    mode: 'onSubmit',
+    mode: 'onChange',
     defaultValues: {
       email: '',
       password: '',
