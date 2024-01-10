@@ -2,13 +2,6 @@
 
 Onyx is a job search management tool that helps you organize and track your every step of your job search. it is a full stack application built with Next.js, React, Shadcn, TypeScript and Tailwind CSS and also Nodemailer for sending emails.
 
-## Features
-
-- Create, edit, and delete job applications
-- Track the status of each job application
-- Add notes to each job application
-- Add contacts to each job application
-
 ## Installation
 
 1. Clone the repo
