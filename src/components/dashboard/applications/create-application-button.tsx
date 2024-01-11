@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/components/ui/use-toast';
@@ -15,27 +16,21 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
-import {
-  CreateApplicationSchema,
-  createApplicationSchema,
-  statuses,
-} from './zod-schema';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { CreateApplicationSchema, createApplicationSchema } from './zod-schema';
+
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
   DialogFooter,
+  DialogTitle,
+  DialogHeader,
+  DialogDescription,
 } from '@/components/ui/dialog';
 
 export function CreateAppButton() {
   const { toast } = useToast();
+  const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const form = useForm<CreateApplicationSchema>({
     resolver: zodResolver(createApplicationSchema),
@@ -50,22 +45,43 @@ export function CreateAppButton() {
   });
 
   async function createApplication(data: CreateApplicationSchema) {
-    toast({
-      title: 'Here is your application infos',
-      description: data.company,
-    });
+    try {
+      toast({
+        title: 'Here is your application infos',
+      });
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+    }
   }
 
   return (
     <>
-      <Dialog>
+      <Dialog open={dialogOpen} onOpenChange={(o) => setDialogOpen(o)}>
         <DialogTrigger asChild>
-          <Button className='group'>
+          <Button
+            onClick={() => {
+              setDialogOpen(!dialogOpen);
+            }}
+            className='group'
+          >
             <Plus className='mr-2 h-5 w-5 text-neutral-400 transition-colors duration-300 ease-in-out group-hover:text-neutral-100' />
             Create Application
           </Button>
         </DialogTrigger>
-        <DialogContent className='bg-background'>
+        <DialogContent
+          onInteractOutside={(e) => {
+            e.preventDefault();
+          }}
+          className='bg-background'
+        >
+          <DialogHeader>
+            <DialogTitle>Create Application</DialogTitle>
+            <DialogDescription>
+              They will receive an email with instructions.
+            </DialogDescription>
+          </DialogHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(createApplication)}
@@ -129,7 +145,7 @@ export function CreateAppButton() {
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name='status'
                 render={({ field }) => (
@@ -153,14 +169,20 @@ export function CreateAppButton() {
                     </Select>
                   </FormItem>
                 )}
-              />
+              /> */}
               {/* add Job post URL FormItem here*/}
               {/* add Job post date and deadline date*/}
 
-              <DialogFooter className='flex-row justify-end gap-2 pt-4 '>
-                <Button className='mt-4' type='submit'>
-                  Create
+              <DialogFooter className='flex-row items-center justify-end gap-2 pt-4 '>
+                <Button
+                  variant='secondary'
+                  onClick={() => {
+                    setDialogOpen(false);
+                  }}
+                >
+                  Cancel
                 </Button>
+                <Button type='submit'>Create</Button>
               </DialogFooter>
             </form>
           </Form>
