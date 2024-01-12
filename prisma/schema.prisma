@@ -84,7 +84,7 @@ model User {
 }
 
 model Application {
-  id           Int               @id @default(autoincrement())
+  id           String            @id @default(uuid())
   company      String
   title        String
   description  String            @db.Text
