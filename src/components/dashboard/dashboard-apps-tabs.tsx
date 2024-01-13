@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { CreateAppButton } from './applications/create-application-button';
 import { applications } from '@/app/applications/[id]/data';
 import { ApplicationStatus } from '@/lib/db/types';
-import { ApplicationCard } from './applications/application-layout-card';
+import { ApplicationCard } from './applications/application-card';
 import Link from 'next/link';
 
 export function DashboardApplicationTabs() {
@@ -45,7 +45,7 @@ export function DashboardApplicationTabs() {
 
           {labels.map(({ label, value }) => (
             <TabsContent key={label} value={value} className='space-y-4'>
-              <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+              <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 sm:px-8 md:grid-cols-3 md:px-0 lg:grid-cols-4'>
                 {applications
                   .filter((application) => application.status === value)
                   .map((item) => (
