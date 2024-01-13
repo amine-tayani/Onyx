@@ -1,5 +1,4 @@
 import format from 'date-fns/format';
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Application } from '@/lib/db/types';

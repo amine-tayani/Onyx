@@ -1,14 +1,8 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ReactNode } from 'react';
-
-export type Application = {
-  title: string;
-  company: string;
-  lastUpdated?: string;
-  logo?: ReactNode | string;
-};
+import { Application } from '@/lib/db/types';
+import { formatDistance } from 'date-fns';
 
 interface Props {
   application: Application;
@@ -21,12 +15,12 @@ export function ApplicationCard({ application }: Props) {
         <CardTitle className='text-sm font-medium text-muted-foreground '>
           {application.company}
         </CardTitle>
-        {application.logo}
+        {application.status}
       </CardHeader>
       <CardContent>
         <div className='text-2xl font-bold'>{application.title}</div>
         <p className='mt-2 text-xs text-neutral-400'>
-          Last updated {application.lastUpdated}
+          posted {formatDistance(new Date(), application.datePosted)}
         </p>
       </CardContent>
     </Card>

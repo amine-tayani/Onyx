@@ -1,7 +1,7 @@
-import { DashboardLayout } from '@/components/dashboard/dashboard-wrapper';
+import { DashboardApplicationTabs } from '@/components/dashboard/dashboard-wrapper';
 
 async function Dashboard() {
-  return <DashboardLayout />;
+  return <DashboardApplicationTabs />;
 }
 
 export default Dashboard;

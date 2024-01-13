@@ -1,43 +1,20 @@
 'use client';
 
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Application } from '@/components/dashboard/applications/application-layout-card';
-import AcceptedTab from './accepted-tab';
-import { OnGoingTab } from './ongoing-tab';
-import { AppliedTab } from './applied-tab';
-import { AllApplicationsTab } from './all-applications-tab';
-import { Icons } from '../ui/icons';
 import { CreateAppButton } from './applications/create-application-button';
+import { applications } from '@/app/applications/[id]/data';
+import { ApplicationStatus } from '@/lib/db/types';
+import { ApplicationCard } from './applications/application-layout-card';
+import Link from 'next/link';
 
-export function DashboardLayout() {
-  const applications: Application[] = [
-    {
-      company: 'X inc.',
-      title: 'Frontend Engineer',
-      logo: <Icons.x className='h-7 w-7' />,
-      lastUpdated: '3 days ago',
-    },
-    {
-      company: 'Google',
-      title: 'Software Engineer',
-      logo: <Icons.google className='h-9 w-9' />,
-      lastUpdated: '2 days ago',
-    },
-    {
-      company: 'Netflix',
-      title: 'Full Stack Developer',
-      logo: <Icons.netflix className='h-9 w-9' />,
-      lastUpdated: '1 day ago',
-    },
-    {
-      company: 'Github',
-      title: 'Product Manager',
-      logo: <Icons.gitHub className='h-9 w-9' />,
-      lastUpdated: '3 days ago',
-    },
-  ];
+export function DashboardApplicationTabs() {
+  const applicationStatus = Object.values(ApplicationStatus);
+  const labels = applicationStatus.map((status) => ({
+    label: status,
+    value: status,
+  }));
 
   return (
     <>
@@ -55,19 +32,30 @@ export function DashboardLayout() {
           </div>
         </div>
 
-        <Tabs defaultValue='all' className='space-y-4'>
+        <Tabs defaultValue={ApplicationStatus.APPLIED} className='space-y-4'>
           <div className='flex justify-between'>
             <TabsList>
-              <TabsTrigger value='all'>All</TabsTrigger>
-              <TabsTrigger value='ongoing'>On Going</TabsTrigger>
-              <TabsTrigger value='applied'>Applied</TabsTrigger>
-              <TabsTrigger value='accepted'>Accepted</TabsTrigger>
+              {labels.map(({ label, value }) => (
+                <TabsTrigger key={label} value={value}>
+                  <span className='capitalize'>{label.toLowerCase()}</span>
+                </TabsTrigger>
+              ))}
             </TabsList>
           </div>
-          <AllApplicationsTab applications={applications} />
-          <AcceptedTab applications={applications} />
-          <OnGoingTab applications={applications} />
-          <AppliedTab applications={applications} />
+
+          {labels.map(({ label, value }) => (
+            <TabsContent key={label} value={value} className='space-y-4'>
+              <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+                {applications
+                  .filter((application) => application.status === value)
+                  .map((item) => (
+                    <Link href={`/applications/${item.id}`} key={item.id}>
+                      <ApplicationCard application={item} />
+                    </Link>
+                  ))}
+              </div>
+            </TabsContent>
+          ))}
         </Tabs>
       </div>
     </>
