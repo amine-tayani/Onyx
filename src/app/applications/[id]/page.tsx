@@ -1,12 +1,11 @@
-import { Application } from './_components/application';
-import { applications } from './data';
+import { ApplicationView } from './_components/application-view';
+import { getApplicationById } from './getApplicationsData';
 
-export default function ApplicationPage() {
-  return (
-    <>
-      <div className='hidden flex-col md:flex'>
-        <Application applications={applications} />
-      </div>
-    </>
-  );
+export default async function ApplicationPage({
+  params: { id },
+}: {
+  params: { id: string };
+}) {
+  const application = await getApplicationById(id);
+  return <ApplicationView application={application} />;
 }

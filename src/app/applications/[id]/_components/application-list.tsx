@@ -1,3 +1,5 @@
+'use client';
+
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { cn } from '@/lib/cn';
 import { ScrollArea } from '@/components/ui/scroll-area';

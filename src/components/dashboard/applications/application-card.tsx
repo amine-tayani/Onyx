@@ -9,7 +9,7 @@ interface Props {
 
 export function ApplicationCard({ application }: Props) {
   return (
-    <Card className='space-y-1 rounded-xl'>
+    <Card className=' space-y-1 rounded-xl'>
       <CardHeader className=' flex flex-row items-center justify-between space-y-0 pb-0'>
         <CardTitle className='font-display text-sm  font-medium text-muted-foreground '>
           {application.company}

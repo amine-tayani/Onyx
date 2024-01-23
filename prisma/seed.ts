@@ -1,12 +1,11 @@
 import prisma from '@/lib/db/prisma';
+import { applications } from './data';
 
 async function main() {
-  prisma.user.create({
-    data: {
-      email: 'email@example.com',
-      name: 'John Doe',
-    },
+  await prisma.application.createMany({
+    data: applications,
   });
+  console.log('Added applications data');
 }
 
 main()

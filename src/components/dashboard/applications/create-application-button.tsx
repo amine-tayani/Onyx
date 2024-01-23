@@ -66,8 +66,8 @@ export function CreateAppButton() {
             }}
             className='group'
           >
-            <Plus className='mr-2 h-5 w-5 text-neutral-400 transition-colors duration-300 ease-in-out group-hover:text-neutral-100' />
-            Create Application
+            <Plus className=' h-5 w-5 text-neutral-400 transition-colors duration-300 ease-in-out group-hover:text-neutral-100 md:mr-2' />
+            <span className='hidden md:block'>Create Application</span>
           </Button>
         </DialogTrigger>
         <DialogContent

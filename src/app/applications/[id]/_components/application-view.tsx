@@ -1,13 +1,15 @@
+'use client';
+
 import format from 'date-fns/format';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Application } from '@/lib/db/types';
 
-interface ApplicationDisplayProps {
+interface ApplicationViewProps {
   application: Application | null;
 }
 
-export function ApplicationDisplay({ application }: ApplicationDisplayProps) {
+export function ApplicationView({ application }: ApplicationViewProps) {
   return (
     <div className='col-span-4 flex h-full flex-col'>
       {application ? (

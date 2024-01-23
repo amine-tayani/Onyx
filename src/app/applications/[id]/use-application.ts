@@ -1,6 +1,6 @@
 import { atom, useAtom } from 'jotai';
 
-import { applications, ApplicationT } from './data';
+import { applications, ApplicationT } from '../../../../prisma/data';
 
 type Config = {
   selected: ApplicationT['id'] | null;
