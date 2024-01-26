@@ -1,23 +1,34 @@
-import type { Metadata } from 'next';
 import TeamSwitcher from '@/components/dashboard/team-switcher';
 import UserNav from '@/components/ui/navigation/user-nav';
-import { siteConfig } from '@/config/site';
 import { ApplicationList } from './_components/application-list';
-import { getApplicationList } from './getApplicationsData';
-
-export const metadata: Metadata = {
-  title: 'Full Stack developer Role',
-  description: `${siteConfig.description}`,
-};
+import { getApplicationById, getApplicationList } from './getApplicationsData';
 
 interface ApplicationsLayoutProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   params: { id: string };
+}
+
+export async function generateMetadata({
+  params: { id },
+}: ApplicationsLayoutProps) {
+  if (!id) return {};
+  const job = await getApplicationById(id);
+
+  const title = job.title;
+  const company = job.company;
+  const description = job.description;
+
+  if (id) {
+    return {
+      title: `${title} - ${company} - Onyx.com`,
+      description: `${description}`,
+    };
+  }
 }
 
 async function ApplicationsLayout({
   children,
-  params,
+  params: { id },
 }: ApplicationsLayoutProps) {
   const applications = await getApplicationList();
   return (
@@ -33,7 +44,7 @@ async function ApplicationsLayout({
         </div>
       </div>
       <div className='grid grid-cols-1 lg:grid-cols-6'>
-        <ApplicationList selected={params.id} items={applications} />
+        <ApplicationList selected={id} items={applications} />
         {children}
       </div>
     </main>
