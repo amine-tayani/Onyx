@@ -28,7 +28,7 @@ export function ApplicationView({ application }: ApplicationViewProps) {
               </p>
             </div>
             <div className='mt-2 self-end text-sm font-normal leading-[1.6] text-primary/80'>
-              posted {getRelativeTime(application.datePosted)}
+              {getRelativeTime(application.datePosted)}
             </div>
           </div>
 
