@@ -12,9 +12,13 @@ export const metadata: Metadata = {
 
 interface ApplicationsLayoutProps {
   children: React.ReactNode;
+  params: { id: string };
 }
 
-async function ApplicationsLayout({ children }: ApplicationsLayoutProps) {
+async function ApplicationsLayout({
+  children,
+  params,
+}: ApplicationsLayoutProps) {
   const applications = await getApplicationList();
   return (
     <main>
@@ -28,8 +32,8 @@ async function ApplicationsLayout({ children }: ApplicationsLayoutProps) {
           </div>
         </div>
       </div>
-      <div className='grid lg:grid-cols-6'>
-        <ApplicationList items={applications} />
+      <div className='grid grid-cols-1 lg:grid-cols-6'>
+        <ApplicationList selected={params.id} items={applications} />
         {children}
       </div>
     </main>

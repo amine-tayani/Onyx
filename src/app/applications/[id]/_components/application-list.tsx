@@ -1,37 +1,33 @@
 'use client';
 
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import Link from 'next/link';
+import { getRelativeTime } from '@/utils/time';
 import { cn } from '@/lib/cn';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Application } from '@/lib/db/types';
-import { useApplication } from '../use-application';
 import { Avatar } from '@radix-ui/react-avatar';
 import { AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface ApplicationListProps {
   items: Application[];
+  selected: string;
 }
 
-export function ApplicationList({ items }: ApplicationListProps) {
-  const [application, setApplication] = useApplication();
-
+export function ApplicationList({ items, selected }: ApplicationListProps) {
   return (
     <ScrollArea className='col-span-2 h-screen'>
       <div className=' flex flex-col gap-2 p-4 pt-0'>
         {items.map((item) => (
-          <button
+          <Link
+            href={`/applications/${item.id}`}
             key={item.id}
             className={cn(
               'flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent',
-              application.selected === item.id && 'bg-muted'
+              {
+                'bg-muted hover:bg-muted/70': selected === item.id,
+              }
             )}
-            onClick={() => {
-              setApplication({
-                ...application,
-                selected: item.id,
-              });
-            }}
           >
             <div className='flex w-full flex-col gap-1'>
               <div className='flex items-center'>
@@ -63,21 +59,12 @@ export function ApplicationList({ items }: ApplicationListProps) {
                   </div>
                 </div>
 
-                <div
-                  className={cn(
-                    'ml-auto text-xs',
-                    application.selected === item.id
-                      ? 'text-foreground'
-                      : 'text-muted-foreground'
-                  )}
-                >
-                  {formatDistanceToNow(new Date(item.datePosted), {
-                    addSuffix: true,
-                  })}
+                <div className={cn('ml-auto text-xs')}>
+                  {getRelativeTime(item.datePosted)}
                 </div>
               </div>
             </div>
-          </button>
+          </Link>
         ))}
       </div>
     </ScrollArea>

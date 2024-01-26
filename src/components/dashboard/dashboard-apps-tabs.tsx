@@ -1,18 +1,18 @@
-'use client';
-
+import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CreateAppButton } from './applications/create-application-button';
-import { applications } from '../../../prisma/data';
+import { getApplicationList } from '@/app/applications/[id]/getApplicationsData';
 import { ApplicationStatus } from '@/lib/db/types';
 import { ApplicationCard } from './applications/application-card';
-import Link from 'next/link';
 
-export function DashboardApplicationTabs() {
+export async function DashboardApplicationTabs() {
   const applicationStatus = Object.values(ApplicationStatus);
   const labels = applicationStatus.map((status) => ({
     label: status,
     value: status,
   }));
+
+  const applications = await getApplicationList();
 
   return (
     <>

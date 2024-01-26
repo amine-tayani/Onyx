@@ -1,9 +1,8 @@
-'use client';
-
-import format from 'date-fns/format';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { EmptyPlaceholder } from '@/components/ui/empty-placeholder';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Application } from '@/lib/db/types';
+import { getRelativeTime } from '@/utils/time';
 
 interface ApplicationViewProps {
   application: Application | null;
@@ -32,22 +31,27 @@ export function ApplicationView({ application }: ApplicationViewProps) {
                 <div className='line-clamp-1 text-xs'>
                   {application.location}
                 </div>
+                <div className='line-clamp-1 text-xs'>
+                  {application.company}
+                </div>
               </div>
+              {application.datePosted && (
+                <div className='ml-auto text-xs text-muted-foreground'>
+                  {getRelativeTime(application.datePosted)}
+                </div>
+              )}
             </div>
-            {application.datePosted && (
-              <div className='ml-auto text-xs text-muted-foreground'>
-                {format(application.datePosted, 'PPpp')}
-              </div>
-            )}
           </div>
-          <div className='flex-1 whitespace-pre-wrap p-4 text-sm'>
+          <div className='text-balance flex-1 whitespace-pre-wrap p-4 text-sm text-neutral-300'>
             {application.description}
           </div>
         </div>
       ) : (
-        <div className='p-8 text-center text-muted-foreground'>
-          No Application selected
-        </div>
+        <EmptyPlaceholder className='my-4 '>
+          <EmptyPlaceholder.Description>
+            No applications are found
+          </EmptyPlaceholder.Description>
+        </EmptyPlaceholder>
       )}
     </div>
   );
