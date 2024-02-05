@@ -1,12 +1,12 @@
 import * as z from 'zod';
 
-// export const statuses = {
-//   APPLIED: { key: 'APPLIED', label: 'APPLIED' },
-//   INTERVIEW: { key: 'INTERVIEW', label: 'INTERVIEW' },
-//   REJECTED: { key: 'REJECTED', label: 'REJECTED' },
-//   OFFER: { key: 'OFFER', label: 'OFFER' },
-//   CLOSED: { key: 'CLOSED', label: 'CLOSED' },
-// };
+export const statuses = {
+  APPLIED: { key: 'APPLIED', label: 'APPLIED' },
+  INTERVIEW: { key: 'INTERVIEW', label: 'INTERVIEW' },
+  REJECTED: { key: 'REJECTED', label: 'REJECTED' },
+  OFFER: { key: 'OFFER', label: 'OFFER' },
+  CLOSED: { key: 'CLOSED', label: 'CLOSED' },
+};
 
 export const createApplicationSchema = z.object({
   title: z.string({ required_error: 'Please type a title.' }),
@@ -17,12 +17,17 @@ export const createApplicationSchema = z.object({
     .max(200, {
       message: 'The description must be shorter than 200 characters',
     }),
-  // status: z
-  //   .enum(['APPLIED', 'INTERVIEW', 'REJECTED', 'OFFER', 'CLOSED'])
-  //   .transform((key) => statuses[key])
-  //   .default('APPLIED'),
-  // url: z.string().url({ message: 'Please enter a valid URL.' }),
-  // location: z.string(),
+  status: z
+    .enum(['APPLIED', 'INTERVIEW', 'REJECTED', 'OFFER', 'CLOSED'], {
+      required_error: 'choose a status',
+    })
+    .transform((key) => statuses[key])
+    .default('APPLIED'),
+  location: z.string({ required_error: 'Please enter the location' }),
+  url: z.string().url({ message: 'Please enter a valid URL.' }),
+  dateOfJob: z.date({
+    required_error: 'A date of when the job was posted is required.',
+  }),
 });
 
 export type CreateApplicationSchema = z.infer<typeof createApplicationSchema>;

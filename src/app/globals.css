@@ -82,6 +82,22 @@
     -o-transform: translateY(-5px) rotate(-45deg);
     transform: translateY(-5px) rotate(-45deg);
   }
+  .custom-scrollable-element {
+    cursor: auto;
+  }
+  .custom-scrollable-element::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+  .custom-scrollable-element::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  .custom-scrollable-element::-webkit-scrollbar-thumb {
+    @apply rounded-xl bg-muted-foreground/20;
+  }
+
+  .custom-scrollable-element::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
 }
 
 @media (max-width: 640px) {

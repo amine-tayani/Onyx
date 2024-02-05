@@ -12,7 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Plus } from 'lucide-react';
+import { CalendarIcon, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
@@ -25,7 +25,26 @@ import {
   DialogHeader,
   DialogDescription,
 } from '@/components/ui/dialog';
-import { CreateApplicationSchema, createApplicationSchema } from './zod-schema';
+import {
+  CreateApplicationSchema,
+  createApplicationSchema,
+  statuses,
+} from './zod-schema';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { cn } from '@/lib/cn';
+import { format } from 'date-fns';
 
 export function CreateAppButton() {
   const { toast } = useToast();
@@ -38,8 +57,8 @@ export function CreateAppButton() {
       title: '',
       company: '',
       description: '',
-      // url: '',
-      // location: '',
+      url: '',
+      location: '',
     },
   });
 
@@ -47,7 +66,7 @@ export function CreateAppButton() {
     try {
       toast({
         variant: 'mytheme',
-        description: `Your ${data.title} application have been saved`,
+        description: <pre>{JSON.stringify(data, null, 2)}</pre>,
       });
     } catch (err) {
       console.error(err);
@@ -78,7 +97,7 @@ export function CreateAppButton() {
           <DialogHeader>
             <DialogTitle>Create Application</DialogTitle>
             <DialogDescription>
-              They will receive an email with instructions.
+              Add your job application so you can check it later.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
@@ -105,26 +124,70 @@ export function CreateAppButton() {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name='company'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className='text-muted-foreground/80'>
-                      Company name
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
-                        placeholder='type the company name'
-                        {...field}
-                      />
-                    </FormControl>
+              <div className='grid grid-cols-2 gap-4'>
+                <FormField
+                  control={form.control}
+                  name='company'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='text-muted-foreground/80'>
+                        Company name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
+                          placeholder='type the company name'
+                          {...field}
+                        />
+                      </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name='dateOfJob'
+                  render={({ field }) => (
+                    <FormItem className='flex flex-col'>
+                      <FormLabel>Date of birth</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={'outline'}
+                              className={cn(
+                                'w-[240px] pl-3 text-left font-normal',
+                                !field.value && 'text-muted-foreground'
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, 'PPP')
+                              ) : (
+                                <span>Pick a date</span>
+                              )}
+                              <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className='w-auto p-0' align='start'>
+                          <Calendar
+                            mode='single'
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date('1900-01-01')
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name='description'
@@ -135,7 +198,7 @@ export function CreateAppButton() {
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        className='resize-none border-none bg-muted hover:bg-muted/70'
+                        className='custom-scrollable-element resize-none border-none bg-muted hover:bg-muted/70'
                         placeholder='copy and paste the job description'
                         {...field}
                       />
@@ -144,32 +207,76 @@ export function CreateAppButton() {
                   </FormItem>
                 )}
               />
-              {/* <FormField
+              <div className='grid grid-cols-2 gap-4'>
+                <FormField
+                  control={form.control}
+                  name='status'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='text-muted-foreground/80'>
+                        Status
+                      </FormLabel>
+                      <Select onValueChange={field.onChange}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder='Select a status' />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {Object.values(statuses).map((status) => (
+                            <SelectItem
+                              className='hover:bg-muted-foreground/20'
+                              value={status.label}
+                              key={status.key}
+                            >
+                              {status.label.toLocaleLowerCase()}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name='location'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='text-muted-foreground/80'>
+                        Location
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
+                          placeholder='type the location'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormField
                 control={form.control}
-                name='status'
+                name='url'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className='text-muted-foreground/80'>
-                      Status
+                      Job URL
                     </FormLabel>
-                    <Select onValueChange={field.onChange}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder='Select a status' />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {Object.values(statuses).map((status) => (
-                          <SelectItem value={status.key} key={status.key}>
-                            {status.label.toLocaleLowerCase()}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <Input
+                        className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
+                        placeholder='paste the job URL here'
+                        {...field}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
                   </FormItem>
                 )}
-              /> */}
-              {/* add Job post URL FormItem here*/}
+              />
               {/* add Job post date and deadline date*/}
 
               <DialogFooter className='flex-row items-center justify-end gap-2 pt-4 '>
