@@ -16,8 +16,6 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
-import { CreateApplicationSchema, createApplicationSchema } from './zod-schema';
-
 import {
   Dialog,
   DialogContent,
@@ -27,6 +25,7 @@ import {
   DialogHeader,
   DialogDescription,
 } from '@/components/ui/dialog';
+import { CreateApplicationSchema, createApplicationSchema } from './zod-schema';
 
 export function CreateAppButton() {
   const { toast } = useToast();
@@ -39,17 +38,17 @@ export function CreateAppButton() {
       title: '',
       company: '',
       description: '',
-      url: '',
-      location: '',
+      // url: '',
+      // location: '',
     },
   });
 
   async function createApplication(data: CreateApplicationSchema) {
     try {
       toast({
-        title: 'Here is your application infos',
+        variant: 'mytheme',
+        description: `Your ${data.title} application have been saved`,
       });
-      console.log(data);
     } catch (err) {
       console.error(err);
     } finally {

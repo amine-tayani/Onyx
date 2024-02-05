@@ -21,8 +21,8 @@ export const createApplicationSchema = z.object({
   //   .enum(['APPLIED', 'INTERVIEW', 'REJECTED', 'OFFER', 'CLOSED'])
   //   .transform((key) => statuses[key])
   //   .default('APPLIED'),
-  url: z.string().url({ message: 'Please enter a valid URL.' }),
-  location: z.string(),
+  // url: z.string().url({ message: 'Please enter a valid URL.' }),
+  // location: z.string(),
 });
 
 export type CreateApplicationSchema = z.infer<typeof createApplicationSchema>;
