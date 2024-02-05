@@ -220,11 +220,7 @@ export function CreateAppButton() {
                       <Select onValueChange={field.onChange}>
                         <FormControl>
                           <SelectTrigger className='text-muted-foreground/70'>
-                            <SelectValue
-                              placeholder={`${
-                                form.formState.defaultValues || 'select status'
-                              } `}
-                            />
+                            <SelectValue placeholder='Select status' />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>

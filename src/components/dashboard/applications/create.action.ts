@@ -14,6 +14,7 @@ export async function createApplication(data: CreateApplicationSchema) {
   return prisma.application.create({
     data: {
       ...data,
+      userId: session.user.id,
     },
   });
 }

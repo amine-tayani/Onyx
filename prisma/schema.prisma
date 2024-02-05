@@ -81,6 +81,7 @@ model User {
   sessions       Session[]
   socialLinks    UserLink[]
   imageUpload    ImageUpload[]
+  applications   Application[]
 }
 
 model Application {
@@ -92,7 +93,11 @@ model Application {
   Url          String?
   datePosted   DateTime
   deadlineDate DateTime?
-  status       ApplicationStatus @default(APPLIED)
+  status       ApplicationStatus
+  user         User              @relation(fields: [userId], references: [id])
+  userId       String
+
+  @@index([userId])
 }
 
 model VerificationRequest {
