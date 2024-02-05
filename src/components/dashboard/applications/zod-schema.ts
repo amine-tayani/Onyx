@@ -1,13 +1,5 @@
 import * as z from 'zod';
 
-export const statuses = {
-  APPLIED: { key: 'APPLIED', label: 'APPLIED' },
-  INTERVIEW: { key: 'INTERVIEW', label: 'INTERVIEW' },
-  REJECTED: { key: 'REJECTED', label: 'REJECTED' },
-  OFFER: { key: 'OFFER', label: 'OFFER' },
-  CLOSED: { key: 'CLOSED', label: 'CLOSED' },
-};
-
 export const createApplicationSchema = z.object({
   title: z.string({ required_error: 'Please type a title.' }),
   company: z.string({ required_error: 'Please type a company name.' }),
@@ -21,12 +13,13 @@ export const createApplicationSchema = z.object({
     .enum(['APPLIED', 'INTERVIEW', 'REJECTED', 'OFFER', 'CLOSED'], {
       required_error: 'choose a status',
     })
-    .transform((key) => statuses[key])
     .default('APPLIED'),
   location: z.string({ required_error: 'Please enter the location' }),
-  url: z.string().url({ message: 'Please enter a valid URL.' }),
-  dateOfJob: z.date({
-    required_error: 'A date of when the job was posted is required.',
+  url: z
+    .string({ required_error: 'Please enter URL.' })
+    .url({ message: 'Please enter a valid URL' }),
+  datePosted: z.date({
+    required_error: 'A date when the job was posted is required.',
   }),
 });
 

@@ -1,29 +1,19 @@
-// 'use server';
+'use server';
 
-// import prisma from '@/lib/db/prisma';
-// import { type Prisma } from '@/lib/db/types';
-// import { CreateApplicationSchema } from './zod-schema';
-// // import { getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth';
+import prisma from '@/lib/db/prisma';
+import { CreateApplicationSchema } from './zod-schema';
 
-// // export async function getUsers() {
-// //   const users = await prisma.user.findMany({
-// //     include: {
-// //       socialLinks: true,
-// //     },
-// //   });
+export async function createApplication(data: CreateApplicationSchema) {
+  const session = await getServerSession();
 
-// //   return users;
-// // }
+  if (!session || !session.user) {
+    throw new Error('Unauthorized');
+  }
 
-// export async function createTrack(data: CreateApplicationSchema) {
-//   // const session = await getServerSession();
-//   return prisma.application.create({
-//     data: {
-//       company: data.company,
-//       datePosted: '',
-//       description: data.description,
-//       location: data.location,
-//       status: data.status.label.toUpperCase,
-//     },
-//   });
-// }
+  return prisma.application.create({
+    data: {
+      ...data,
+    },
+  });
+}

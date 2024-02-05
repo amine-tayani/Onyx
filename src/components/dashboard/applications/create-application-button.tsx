@@ -25,11 +25,7 @@ import {
   DialogHeader,
   DialogDescription,
 } from '@/components/ui/dialog';
-import {
-  CreateApplicationSchema,
-  createApplicationSchema,
-  statuses,
-} from './zod-schema';
+import { CreateApplicationSchema, createApplicationSchema } from './zod-schema';
 import {
   Select,
   SelectContent,
@@ -49,6 +45,7 @@ import { format } from 'date-fns';
 export function CreateAppButton() {
   const { toast } = useToast();
   const [dialogOpen, setDialogOpen] = React.useState(false);
+  const status = ['APPLIED', 'INTERVIEW', 'REJECTED', 'OFFER', 'CLOSED'];
 
   const form = useForm<CreateApplicationSchema>({
     resolver: zodResolver(createApplicationSchema),
@@ -92,10 +89,12 @@ export function CreateAppButton() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className='bg-background'
+          className=' bg-[#1d1d1d]'
         >
           <DialogHeader>
-            <DialogTitle>Create Application</DialogTitle>
+            <DialogTitle className='text-2xl font-semibold text-neutral-100'>
+              Create Application
+            </DialogTitle>
             <DialogDescription>
               Add your job application so you can check it later.
             </DialogDescription>
@@ -115,7 +114,7 @@ export function CreateAppButton() {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
+                        className='border-none bg-muted hover:bg-muted/80'
                         placeholder='Type role title'
                         {...field}
                       />
@@ -124,7 +123,7 @@ export function CreateAppButton() {
                   </FormItem>
                 )}
               />
-              <div className='grid grid-cols-2 gap-4'>
+              <div className='grid grid-cols-2 items-center gap-3'>
                 <FormField
                   control={form.control}
                   name='company'
@@ -135,8 +134,8 @@ export function CreateAppButton() {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
-                          placeholder='type the company name'
+                          className='border-none bg-muted hover:bg-muted/80'
+                          placeholder='Type the company name'
                           {...field}
                         />
                       </FormControl>
@@ -147,24 +146,26 @@ export function CreateAppButton() {
                 />
                 <FormField
                   control={form.control}
-                  name='dateOfJob'
+                  name='datePosted'
                   render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <FormLabel>Date of birth</FormLabel>
+                    <FormItem className='mt-2.5 flex flex-col'>
+                      <FormLabel className='text-muted-foreground/80'>
+                        Posted in
+                      </FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
-                              variant={'outline'}
+                              variant={'default'}
                               className={cn(
-                                'w-[240px] pl-3 text-left font-normal',
-                                !field.value && 'text-muted-foreground'
+                                'font-light hover:bg-muted/80 hover:text-muted-foreground',
+                                !field.value && 'text-muted-foreground/70'
                               )}
                             >
                               {field.value ? (
                                 format(field.value, 'PPP')
                               ) : (
-                                <span>Pick a date</span>
+                                <span>Choose a date</span>
                               )}
                               <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
                             </Button>
@@ -207,7 +208,7 @@ export function CreateAppButton() {
                   </FormItem>
                 )}
               />
-              <div className='grid grid-cols-2 gap-4'>
+              <div className='grid grid-cols-2 gap-3'>
                 <FormField
                   control={form.control}
                   name='status'
@@ -218,18 +219,22 @@ export function CreateAppButton() {
                       </FormLabel>
                       <Select onValueChange={field.onChange}>
                         <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder='Select a status' />
+                          <SelectTrigger className='text-muted-foreground/70'>
+                            <SelectValue
+                              placeholder={`${
+                                form.formState.defaultValues || 'select status'
+                              } `}
+                            />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {Object.values(statuses).map((status) => (
+                          {status.map((st, idx) => (
                             <SelectItem
-                              className='hover:bg-muted-foreground/20'
-                              value={status.label}
-                              key={status.key}
+                              className='text-muted-foreground hover:bg-[#2d2d2d]'
+                              value={st}
+                              key={idx}
                             >
-                              {status.label.toLocaleLowerCase()}
+                              {st}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -247,7 +252,7 @@ export function CreateAppButton() {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
+                          className='border-none bg-muted hover:bg-muted/80'
                           placeholder='type the location'
                           {...field}
                         />
@@ -267,7 +272,7 @@ export function CreateAppButton() {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className='border-none bg-muted hover:bg-muted/70 focus:bg-muted/60'
+                        className='border-none bg-muted hover:bg-muted/80'
                         placeholder='paste the job URL here'
                         {...field}
                       />
@@ -277,18 +282,22 @@ export function CreateAppButton() {
                   </FormItem>
                 )}
               />
-              {/* add Job post date and deadline date*/}
-
-              <DialogFooter className='flex-row items-center justify-end gap-2 pt-4 '>
+              <DialogFooter className='flex-row items-center justify-end gap-1 pt-4 '>
                 <Button
-                  variant='secondary'
                   onClick={() => {
+                    form.reset();
                     setDialogOpen(false);
                   }}
                 >
                   Cancel
                 </Button>
-                <Button type='submit'>Create</Button>
+                <Button
+                  disabled={form.formState.isSubmitting}
+                  className='bg-hero hover:bg-purple-800'
+                  type='submit'
+                >
+                  Create
+                </Button>
               </DialogFooter>
             </form>
           </Form>
