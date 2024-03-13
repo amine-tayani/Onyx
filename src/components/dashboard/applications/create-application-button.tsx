@@ -4,6 +4,9 @@ import * as React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/cn';
+import { format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 import {
   Form,
   FormControl,
@@ -39,10 +42,12 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { cn } from '@/lib/cn';
-import { format } from 'date-fns';
+import { createApplication } from './create.action';
+import { Spinner } from '@/components/ui/spinner';
 
 export function CreateAppButton() {
+  const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
   const { toast } = useToast();
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const status = ['APPLIED', 'INTERVIEW', 'REJECTED', 'OFFER', 'CLOSED'];
@@ -54,20 +59,25 @@ export function CreateAppButton() {
       title: '',
       company: '',
       description: '',
-      url: '',
+      Url: '',
       location: '',
     },
   });
 
-  async function createApplication(data: CreateApplicationSchema) {
+  async function onSubmit(data: CreateApplicationSchema) {
+    const { id } = await createApplication(data);
     try {
+      setLoading(true);
       toast({
         variant: 'mytheme',
-        description: <pre>{JSON.stringify(data, null, 2)}</pre>,
+        title: 'Success',
+        description: `Your Application has been created with the id : ${id}`,
       });
+      router.refresh();
     } catch (err) {
       console.error(err);
     } finally {
+      setLoading(false);
     }
   }
 
@@ -101,7 +111,7 @@ export function CreateAppButton() {
           </DialogHeader>
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit(createApplication)}
+              onSubmit={form.handleSubmit(onSubmit)}
               className='flex flex-col gap-4'
             >
               <FormField
@@ -260,7 +270,7 @@ export function CreateAppButton() {
               </div>
               <FormField
                 control={form.control}
-                name='url'
+                name='Url'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className='text-muted-foreground/80'>
@@ -288,11 +298,11 @@ export function CreateAppButton() {
                   Cancel
                 </Button>
                 <Button
-                  disabled={form.formState.isSubmitting}
-                  className='bg-hero hover:bg-purple-800'
+                  disabled={form.formState.isSubmitting || loading}
+                  className='bg-hero hover:bg-purple-800 disabled:cursor-not-allowed disabled:opacity-20 disabled:hover:bg-none'
                   type='submit'
                 >
-                  Create
+                  {loading ? <Spinner /> : 'Create'}
                 </Button>
               </DialogFooter>
             </form>

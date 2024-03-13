@@ -15,7 +15,7 @@ export const createApplicationSchema = z.object({
     })
     .default('APPLIED'),
   location: z.string({ required_error: 'Please enter the location' }),
-  url: z
+  Url: z
     .string({ required_error: 'Please enter URL.' })
     .url({ message: 'Please enter a valid URL' }),
   datePosted: z.date({
