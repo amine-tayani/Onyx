@@ -13,16 +13,21 @@ export async function getApplicationList() {
 }
 
 export async function getApplicationById(id: string) {
-  const applications = await prisma.application.findFirstOrThrow({
-    where: {
-      id,
-    },
-    orderBy: [
-      {
-        id: 'desc',
+  try {
+    const applications = await prisma.application.findFirstOrThrow({
+      where: {
+        id,
       },
-    ],
-  });
+      orderBy: [
+        {
+          id: 'desc',
+        },
+      ],
+    });
 
-  return applications;
+    return applications;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 }

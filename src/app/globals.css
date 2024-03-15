@@ -99,6 +99,12 @@
     @apply bg-muted-foreground/40;
   }
 }
+.ProseMirror:focus {
+  outline: none;
+}
+.ProseMirror {
+  padding: 20px;
+}
 
 @media (max-width: 640px) {
   .container {

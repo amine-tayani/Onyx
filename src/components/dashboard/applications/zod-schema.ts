@@ -5,9 +5,9 @@ export const createApplicationSchema = z.object({
   company: z.string({ required_error: 'Please type a company name.' }),
   description: z
     .string({ required_error: 'Please type the job description.' })
-    .min(40, { message: 'description must be longer than 40 characters' })
-    .max(200, {
-      message: 'The description must be shorter than 200 characters',
+    .min(200, { message: 'Must be longer than 200 characters' })
+    .max(2000, {
+      message: 'Must be shorter than 2000 characters',
     }),
   status: z
     .enum(['APPLIED', 'INTERVIEW', 'REJECTED', 'OFFER', 'CLOSED'], {
@@ -19,7 +19,7 @@ export const createApplicationSchema = z.object({
     .string({ required_error: 'Please enter URL.' })
     .url({ message: 'Please enter a valid URL' }),
   datePosted: z.date({
-    required_error: 'A date when the job was posted is required.',
+    required_error: 'Date field is required.',
   }),
 });
 

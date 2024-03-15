@@ -17,7 +17,6 @@ import {
 } from '@/components/ui/form';
 import { CalendarIcon, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import {
   Dialog,
@@ -26,7 +25,6 @@ import {
   DialogFooter,
   DialogTitle,
   DialogHeader,
-  DialogDescription,
 } from '@/components/ui/dialog';
 import { CreateApplicationSchema, createApplicationSchema } from './zod-schema';
 import {
@@ -44,6 +42,7 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 import { createApplication } from './create.action';
 import { Spinner } from '@/components/ui/spinner';
+import Wysiwyg from '@/components/ui/markdown/wysiwyg';
 
 export function CreateAppButton() {
   const router = useRouter();
@@ -51,6 +50,7 @@ export function CreateAppButton() {
   const { toast } = useToast();
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const status = ['APPLIED', 'INTERVIEW', 'REJECTED', 'OFFER', 'CLOSED'];
+  const today = new Date();
 
   const form = useForm<CreateApplicationSchema>({
     resolver: zodResolver(createApplicationSchema),
@@ -99,41 +99,38 @@ export function CreateAppButton() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className=' bg-[#1d1d1d]'
+          className='bg-[#1d1d1d] p-8 lg:h-[700px] lg:min-w-[600px] xl:min-w-[950px]'
         >
           <DialogHeader>
             <DialogTitle className='text-2xl font-semibold text-neutral-100'>
               Create Application
             </DialogTitle>
-            <DialogDescription>
-              Add your job application so you can check it later.
-            </DialogDescription>
           </DialogHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className='flex flex-col gap-4'
             >
-              <FormField
-                name='title'
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className='text-muted-foreground/80'>
-                      Title
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        className='border-none bg-muted hover:bg-muted/80'
-                        placeholder='Type role title'
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className='grid grid-cols-2 items-center gap-3'>
+              <div className='grid grid-cols-2 gap-x-3'>
+                <FormField
+                  name='title'
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='text-muted-foreground/80'>
+                        Title
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className='border-none bg-muted hover:bg-muted/80'
+                          placeholder='Type role title'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name='company'
@@ -154,11 +151,13 @@ export function CreateAppButton() {
                     </FormItem>
                   )}
                 />
+              </div>
+              <div className='grid grid-cols-2 gap-x-3'>
                 <FormField
                   control={form.control}
                   name='datePosted'
                   render={({ field }) => (
-                    <FormItem className='mt-2.5 flex flex-col'>
+                    <FormItem className=' mt-[0.551rem] flex flex-col'>
                       <FormLabel className='text-muted-foreground/80'>
                         Posted in
                       </FormLabel>
@@ -166,9 +165,8 @@ export function CreateAppButton() {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
-                              variant={'default'}
                               className={cn(
-                                'font-light hover:bg-muted/80 hover:text-muted-foreground',
+                                'font-light text-muted-foreground/70 hover:bg-muted/80 hover:text-muted-foreground',
                                 !field.value && 'text-muted-foreground/70'
                               )}
                             >
@@ -186,10 +184,9 @@ export function CreateAppButton() {
                             mode='single'
                             selected={field.value}
                             onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date('1900-01-01')
-                            }
                             initialFocus
+                            defaultMonth={today}
+                            toDate={today}
                           />
                         </PopoverContent>
                       </Popover>
@@ -198,26 +195,28 @@ export function CreateAppButton() {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name='Url'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='text-muted-foreground/80'>
+                        Job URL
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          className='border-none bg-muted hover:bg-muted/80'
+                          placeholder='paste the job URL here'
+                          {...field}
+                        />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
-              <FormField
-                control={form.control}
-                name='description'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className='text-muted-foreground/80'>
-                      Description
-                    </FormLabel>
-                    <FormControl>
-                      <Textarea
-                        className='custom-scrollable-element resize-none border-none bg-muted hover:bg-muted/70'
-                        placeholder='copy and paste the job description'
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
               <div className='grid grid-cols-2 gap-3'>
                 <FormField
                   control={form.control}
@@ -270,24 +269,23 @@ export function CreateAppButton() {
               </div>
               <FormField
                 control={form.control}
-                name='Url'
+                name='description'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className='text-muted-foreground/80'>
-                      Job URL
+                      Description
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        className='border-none bg-muted hover:bg-muted/80'
-                        placeholder='paste the job URL here'
-                        {...field}
+                      <Wysiwyg
+                        onChange={field.onChange}
+                        description={field.name}
                       />
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <DialogFooter className='flex-row items-center justify-end gap-1 pt-4 '>
                 <Button
                   onClick={() => {
