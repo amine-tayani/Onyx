@@ -42,7 +42,7 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 import { createApplication } from './create.action';
 import { Spinner } from '@/components/ui/spinner';
-import Wysiwyg from '@/components/ui/markdown/wysiwyg';
+import TiptapEditor from '@/components/ui/tiptap-editor';
 
 export function CreateAppButton() {
   const router = useRouter();
@@ -99,7 +99,7 @@ export function CreateAppButton() {
           onInteractOutside={(e) => {
             e.preventDefault();
           }}
-          className='bg-[#1d1d1d] p-8 lg:h-[700px] lg:min-w-[600px] xl:min-w-[950px]'
+          className='bg-[#1d1d1d] px-8 py-6 lg:min-w-[500px] xl:min-w-[750px]'
         >
           <DialogHeader>
             <DialogTitle className='text-2xl font-semibold text-neutral-100'>
@@ -276,10 +276,9 @@ export function CreateAppButton() {
                       Description
                     </FormLabel>
                     <FormControl>
-                      <Wysiwyg
-                        onChange={field.onChange}
-                        description={field.name}
-                      />
+                      {/* render wysiwyg editor here */}
+                      {field.value}
+                      <TiptapEditor />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -288,12 +287,14 @@ export function CreateAppButton() {
 
               <DialogFooter className='flex-row items-center justify-end gap-1 pt-4 '>
                 <Button
+                  type='button'
                   onClick={() => {
+                    form.clearErrors();
                     form.reset();
                     setDialogOpen(false);
                   }}
                 >
-                  Cancel
+                  Clear
                 </Button>
                 <Button
                   disabled={form.formState.isSubmitting || loading}
