@@ -270,14 +270,13 @@ export function CreateAppButton() {
               <FormField
                 control={form.control}
                 name='description'
+                // eslint-disable-next-line no-unused-vars
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className='text-muted-foreground/80'>
                       Description
                     </FormLabel>
                     <FormControl>
-                      {/* render wysiwyg editor here */}
-                      {field.value}
                       <TiptapEditor />
                     </FormControl>
                     <FormMessage />

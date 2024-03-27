@@ -46,6 +46,7 @@
     "@react-email/render": "^0.0.10",
     "@tiptap/extension-heading": "^2.2.4",
     "@tiptap/extension-paragraph": "^2.2.4",
+    "@tiptap/extension-placeholder": "^2.2.4",
     "@tiptap/extension-text": "^2.2.4",
     "@tiptap/pm": "^2.2.4",
     "@tiptap/react": "^2.2.4",
