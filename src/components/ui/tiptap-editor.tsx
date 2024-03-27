@@ -8,7 +8,6 @@ import Heading from '@tiptap/extension-heading';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
 import { Toolbar } from './editor-toolbar';
-import { ScrollArea } from './scroll-area';
 import Placeholder from '@tiptap/extension-placeholder';
 
 export default function Tiptap() {
@@ -24,8 +23,6 @@ export default function Tiptap() {
     }),
     Paragraph,
     Text,
-    // Typography,
-    // Highlight,
     Heading.configure({
       levels: [1, 2, 3, 4],
     }),
@@ -39,7 +36,7 @@ export default function Tiptap() {
     editorProps: {
       attributes: {
         class:
-          'bg-muted rounded-lg focus:outline-none p-5 prose prose prose-lg h-[130px] w-[700px] text-neutral-100 text-sm',
+          'min-h-[150px] max-h-[150px] w-[700px] rounded-lg rounded-br-none rounded-bl-none bg-muted px-3 py-6 border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto',
       },
     },
   });
@@ -50,9 +47,7 @@ export default function Tiptap() {
         <Toolbar editor={editor} />
       </div>
       <div className='flex justify-center'>
-        <ScrollArea className='rounded-md border'>
-          <EditorContent editor={editor} />
-        </ScrollArea>
+        <EditorContent editor={editor} />
       </div>
     </div>
   );
