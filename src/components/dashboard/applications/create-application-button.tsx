@@ -270,6 +270,7 @@ export function CreateAppButton() {
               <FormField
                 control={form.control}
                 name='description'
+                // TODO : connect rhf to this editor component
                 // eslint-disable-next-line no-unused-vars
                 render={({ field }) => (
                   <FormItem>

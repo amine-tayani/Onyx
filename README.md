@@ -1,6 +1,6 @@
 # Onyx
 
-Onyx is a job search management tool that helps you organize and track your every step of your job search. it is a full stack application built with Next.js, React, Shadcn, TypeScript and Tailwind CSS / tiptap wysiwyg editor.
+Onyx is a job search management tool that helps you organize and track your every step of your job search. it is a full stack application built with Next.js, React, Shadcn, TypeScript and Tailwind CSS / tiptap rich text editor.
 
 ## Installation
 
